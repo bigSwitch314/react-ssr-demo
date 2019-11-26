@@ -19,7 +19,8 @@
       ["@babel/plugin-proposal-decorators", { "legacy": true }],
       ["@babel/plugin-proposal-class-properties", { "loose": true }],
       ["@babel/plugin-transform-runtime"],
-      "dynamic-import-webpack"
+      "dynamic-import-webpack",
+      "@babel/plugin-transform-modules-commonjs"
     ]
   }
   
