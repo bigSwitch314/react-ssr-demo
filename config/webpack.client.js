@@ -11,7 +11,9 @@ module.exports = {
     path: DIST_PUBLIC,
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['index.js'],
+    }),
   ],
   module: {
     rules: [

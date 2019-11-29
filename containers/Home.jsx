@@ -7,12 +7,19 @@ import { getHomeList, getData } from './homeStore/action'
 class Home extends React.Component {
 
   componentDidMount() {
-    // this.props.getHomeList()
+    this.props.getHomeList() 
   }
 
   render() {
     const { list } = this.props
-    return list.map(item => <div key={item.id}>{item.username}</div>)
+    return (
+     <div>
+        
+        {/* list.map(item => <div key={item.id}>{item.username}</div>) */}
+        4455
+      </div> 
+    )
+      
   }
 }
 
