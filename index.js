@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom'
 import { BrowserRouter } from 'react-router-dom'
 import routers from './routes'
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import store from './redux/storeClient'
 
 ReactDom.hydrate(
   <Provider store={store}>

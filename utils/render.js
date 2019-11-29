@@ -1,20 +1,10 @@
 import React from 'react'
 import { renderToString} from 'react-dom/server'
-// import { matchRoutes } from 'react-router-config'
 import { StaticRouter, matchPath } from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import routers from '../routes'
 import { Provider } from 'react-redux'
-import store from '../redux/store'
-
-import axios from 'axios'
-axios.get('http://39.108.60.163:443/blog/admin/get?page_no=1&page_size=5')
-.then((res) => {
-  const result = res.data.data
-  console.log('44444--------------------', result.list)
-}).catch(error => {
-  console.log('error--------------------', error)
-})
+import store from '../redux/storeServer'
 
 const render = (req, res) => {
   const matchRoutes = []
@@ -41,7 +31,8 @@ const render = (req, res) => {
       </Provider>
     )
 
-    // 响应请求内容
+
+    // 响应请求内容 
     const result = `
       <html>
       <head>
@@ -50,6 +41,7 @@ const render = (req, res) => {
       <body>
         <div id="root">${content}</div>
         <script src="/index.js"></script>
+        <textarea style="display:none" id="ssr-initalState">${JSON.stringify(store.getState())}</textarea>
       </body>
       </html>
     `

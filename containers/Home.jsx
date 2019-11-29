@@ -7,7 +7,7 @@ import { getHomeList, getData } from './homeStore/action'
 class Home extends React.Component {
 
   componentDidMount() {
-    this.props.getHomeList()
+    // this.props.getHomeList()
   }
 
   render() {

@@ -12,6 +12,7 @@ export const getHomeList = () => {
     axios.get('http://39.108.60.163:443/blog/admin/get?page_no=1&page_size=5')
     .then((res) => {
       const result = res.data.data
+      console.log('home-list------------------', result.list)
       dispatch(changeList(result.list))
     }).catch(error => {
       console.log(error)
