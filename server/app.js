@@ -4,9 +4,10 @@ var app = express()
 var server = http.createServer(app)
 var io = require('socket.io')(server)
 
-import render from './utils/render'
+import render from './render'
 
 app.use(express.static('public'))
+app.use(express.static('dist'))
 app.get('*', function(req, res) {
   io.on('connection',function(socket) {
     console.log('a user connected')

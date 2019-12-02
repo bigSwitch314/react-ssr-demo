@@ -2,9 +2,9 @@ import React from 'react'
 import { renderToString} from 'react-dom/server'
 import { StaticRouter, matchPath } from 'react-router-dom'
 import {Route} from 'react-router-dom'
-import routers from '../routes'
+import routers from '../src/routes'
 import { Provider } from 'react-redux'
-import store from '../redux/storeServer'
+import store from '../src/redux/storeServer'
 
 const render = (req, res) => {
   const matchRoutes = []
@@ -40,7 +40,7 @@ const render = (req, res) => {
       </head>
       <body>
         <div id="root">${content}</div>
-        <script src="/index.js"></script>
+        <script src="/client.js"></script>
         <script src="/socket.io.js"></script>
         <script>
           window.onload = function () {

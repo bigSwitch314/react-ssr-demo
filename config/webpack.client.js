@@ -1,14 +1,14 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-const DIST_PUBLIC = path.resolve(__dirname, '../public')
+const DIST_PATH = path.resolve(__dirname, '../dist')
 
 module.exports = {
   mode:'development',
-  entry:'./index.js',
+  entry:'./src/index.js',
   output: {
-    filename:'index.js',
-    path: DIST_PUBLIC,
+    filename:'client.js',
+    path: DIST_PATH,
   },
   plugins: [
     new CleanWebpackPlugin({
