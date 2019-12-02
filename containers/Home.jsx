@@ -16,7 +16,7 @@ class Home extends React.Component {
      <div>
         
         {/* list.map(item => <div key={item.id}>{item.username}</div>) */}
-        4455
+        67894
       </div> 
     )
       
@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
 const newHome = connect(mapStateToProps, mapDispatchToProps)(Home)
 
 newHome.loadData = (store) => {
-  return store.dispatch(getHomeList())
+  // return store.dispatch(getHomeList())
 }
 
 export default newHome

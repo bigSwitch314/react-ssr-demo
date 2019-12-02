@@ -41,12 +41,11 @@ const render = (req, res) => {
       <body>
         <div id="root">${content}</div>
         <script src="/index.js"></script>
-        <script src="./socket.io.js"></script>
+        <script src="/socket.io.js"></script>
         <script>
           window.onload = function () {
             var socket = io.connect();
             socket.on('reload', function () {
-              console.log('------- reload')
               window.location.reload();
             })
           }
