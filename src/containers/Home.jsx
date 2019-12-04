@@ -16,7 +16,7 @@ class Home extends React.Component {
      <div>
         
         {/* list.map(item => <div key={item.id}>{item.username}</div>) */}
-        69377
+        hello world!
       </div> 
     )
       
