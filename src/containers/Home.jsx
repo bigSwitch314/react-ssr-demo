@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { getHomeList, getData } from './homeStore/action'
+import { getHomeList } from '../modules/home'
 
 
 class Home extends React.Component {
@@ -14,8 +14,7 @@ class Home extends React.Component {
     const { list } = this.props
     return (
      <div>
-        
-        {/* list.map(item => <div key={item.id}>{item.username}</div>) */}
+        {list&& list.map(item => <div key={item.id}>{item.username}</div>)}
         hello world!
       </div> 
     )

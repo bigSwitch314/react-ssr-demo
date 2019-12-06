@@ -50,7 +50,7 @@ const render = (req, res) => {
             })
           }
         </script>
-        <textarea style="display:none" id="ssr-initalState">${JSON.stringify(store.getState())}</textarea>
+        <textarea style="display:none" id="ssr-initialState">${JSON.stringify(store.getState())}</textarea>
       </body>
       </html>
     `

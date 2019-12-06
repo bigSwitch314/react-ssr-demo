@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['index.js'],
+      cleanOnceBeforeBuildPatterns: ['client.js'],
     }),
   ],
   module: {

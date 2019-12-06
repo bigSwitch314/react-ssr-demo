@@ -9,12 +9,14 @@ module.exports = {
   mode:'development',
   entry:'./server/app.js',
   output: {
-    filename:'bundle.js',
+    filename:'server.js',
     path: DIST_PATH,
   },
   externals: [nodeExternals()],
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['server.js'],
+    }),
   ],
   module: {
     rules: [
