@@ -4,10 +4,10 @@
 
 
 import React from 'react'
-import { Menu } from 'antd'
+// import { Menu } from 'antd'
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom'
-import { routerConfig } from './menu'
+import { routerConfig } from './router.config'
 
 
 export function getParentKey(url, configs = routerConfig) {
@@ -77,39 +77,39 @@ export function getRoutes(path, routerData) {
   return renderRoutes
 }
 
-export function getMenus(path, routes) {
-  let shoudMatch = true
-  path.replace(/^\/+|\/+/g, '')
-  let matchedPath = path
-  if (path.indexOf('!') === 0) {
-    shoudMatch = false
-    matchedPath = path.substr(1)
-  }
-  if (shoudMatch) {
-    routes = routes.filter(items => items.path === matchedPath)
-  } else {
-    routes = routes.filter(items => items.path !== matchedPath)
-  }
-  const res = routes.map(route => {
-    if (!route.name) return null // 这里需要抛出警告
-    if (!route.component) {
-      return (
-        route.children.length > 0 &&
-        <Menu.SubMenu title={<span>{route.icon}<span>{route.name}</span></span>} key={route.path}>
-          {route.children.map(item => (
-            <Menu.Item key={item.path}>
-              <Link to={item.fullPath}>{item.name}</Link>
-            </Menu.Item>
-          ))}
-        </Menu.SubMenu>
-      )
-    }
-    return (
-      <Menu.Item key={route.path}>
-        <Link to={route.fullPath}>{route.icon}<span>{route.name}</span></Link>
-      </Menu.Item>
-    )
-  })
+// export function getMenus(path, routes) {
+//   let shoudMatch = true
+//   path.replace(/^\/+|\/+/g, '')
+//   let matchedPath = path
+//   if (path.indexOf('!') === 0) {
+//     shoudMatch = false
+//     matchedPath = path.substr(1)
+//   }
+//   if (shoudMatch) {
+//     routes = routes.filter(items => items.path === matchedPath)
+//   } else {
+//     routes = routes.filter(items => items.path !== matchedPath)
+//   }
+//   const res = routes.map(route => {
+//     if (!route.name) return null // 这里需要抛出警告
+//     if (!route.component) {
+//       return (
+//         route.children.length > 0 &&
+//         <Menu.SubMenu title={<span>{route.icon}<span>{route.name}</span></span>} key={route.path}>
+//           {route.children.map(item => (
+//             <Menu.Item key={item.path}>
+//               <Link to={item.fullPath}>{item.name}</Link>
+//             </Menu.Item>
+//           ))}
+//         </Menu.SubMenu>
+//       )
+//     }
+//     return (
+//       <Menu.Item key={route.path}>
+//         <Link to={route.fullPath}>{route.icon}<span>{route.name}</span></Link>
+//       </Menu.Item>
+//     )
+//   })
 
-  return res
-}
+//   return res
+// }
