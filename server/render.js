@@ -2,18 +2,20 @@ import React from 'react'
 import { renderToString} from 'react-dom/server'
 import { StaticRouter, matchPath } from 'react-router-dom'
 import {Route} from 'react-router-dom'
-import routers from '../src/routes'
+import router from '../src/router'
 import { Provider } from 'react-redux'
 import store from '../src/redux/storeServer'
 
 const render = (req, res) => {
   const matchRoutes = []
   const promises = []
-  routers.some(route=> {
-      matchPath(req.path, route) ? matchRoutes.push(route) : ''
+  router.some(route=> {
+    matchPath(req.path, route) ? matchRoutes.push(route) : ''
   })
   matchRoutes.forEach( item=> {
+    if (item.loadData) {
       promises.push(item.loadData(store))
+    }
   })
 
   Promise.all(promises).then(() => {
@@ -22,7 +24,7 @@ const render = (req, res) => {
         <StaticRouter location={req.path} >
           <div>
             {
-              routers.map(route => (
+              router.map(route => (
                 <Route {...route} />
               ))
             }
