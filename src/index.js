@@ -13,7 +13,6 @@ const menuCodes = {
 }
 
 const { routesData } = getRoutesData(menuCodes)
-console.log('routesData--------', routesData)
 
 ReactDom.hydrate(
   <Provider store={store}>

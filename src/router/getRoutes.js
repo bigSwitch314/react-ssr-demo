@@ -41,9 +41,6 @@ function createRoutesData(routerCon, auths = {}) {
         </Component>
       )
     }
-    console.log('children----', children)
-    console.log('childrenfilter----', children.filter(item => auths[item.name]))
-    console.log('auths----', auths)
     // console.log('name----', item.name)
     route.children = children.filter(item => auths[item.name]).map(item => {
       const childrenPath = `${items.path}/${item.path}`

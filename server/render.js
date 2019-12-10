@@ -28,10 +28,11 @@ const render = (req, res) => {
     }
   })
 
+  let context = { css: [] }
   Promise.all(promises).then(() => {
     const content = renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.path} >
+        <StaticRouter location={req.path} context={context}>
           <div>
             <Switch>
               {routesData.map(routes => routes.children.length > 0 ?
@@ -57,12 +58,14 @@ const render = (req, res) => {
       </Provider>
     )
 
+    const cssStr = context.css.length ? context.css.join('\n') : ''
 
     // 响应请求内容 
     const result = `
       <html>
       <head>
         <title>hello</title>
+        <style>${cssStr}</style>
       </head>
       <body>
         <div id="root">${content}</div>

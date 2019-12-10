@@ -3,8 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 // import { Input } from 'antd'
 import { getHomeList } from '../modules/home'
-import getRoutesData from '../router/getRoutes'
-import { getMenus, getRoutes, getParentKey, getCurrentRoute } from '../router/utils'
+
+import style from './home.css'
 
 const menuCodes = {
   首页: '001',
@@ -22,6 +22,14 @@ const menuCodes = {
 
 class Home extends React.Component {
 
+  componentWillMount() {
+    //判断是否为服务端渲染环境
+    const { staticContext } = this.props
+    if (staticContext) {
+      staticContext.css.push(style._getCss())
+    }
+  }
+  
   componentDidMount() {
     this.props.getHomeList() 
   }
@@ -30,11 +38,10 @@ class Home extends React.Component {
     const { homeList } = this.props
     const { list=[] } = homeList
 
-    console.log('list----------------------', list)
     return (
-     <div>
+     <div className={style.bk}>
         {list&& list.map(item => <div key={item.id}>{item.username}</div>)}
-        hello world!9999
+        hello world!
         {/* <Input/> */}
       </div> 
     )
