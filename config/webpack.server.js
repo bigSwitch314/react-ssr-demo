@@ -12,7 +12,10 @@ module.exports = {
     filename:'server.js',
     path: DIST_PATH,
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    whitelist: /antd\/lib(\/)*(.)*\/style\/index\.css/
+
+  })],
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['server.js'],
@@ -26,7 +29,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
+        test: /\.(css|less)$/,
         use: [
           'isomorphic-style-loader',
           {
@@ -34,7 +37,14 @@ module.exports = {
             options: {
               modules: true
             }
-          }
+          },
+          {
+            loader: 'less-loader',
+          },
+        ],
+        include: [
+          path.resolve(__dirname, '../src'),
+          path.resolve(__dirname, '../node_modules/ant/**')
         ],
       },
     ],

@@ -1,16 +1,19 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-// import { Input } from 'antd'
+import { Input } from 'antd'
 import { getHomeList } from '../modules/home'
+import withStyle from '../withStyle'
 
-import style from './home.css'
+// import style from './home.less'
+import  style from'antd/lib/input/style/css';
 
 const menuCodes = {
   首页: '001',
   登录: '002',
 }
 
+@withStyle(style)
 @connect(
   state => ({
     homeList: state.home.homeList,
@@ -21,14 +24,6 @@ const menuCodes = {
 )
 
 class Home extends React.Component {
-
-  componentWillMount() {
-    //判断是否为服务端渲染环境
-    const { staticContext } = this.props
-    if (staticContext) {
-      staticContext.css.push(style._getCss())
-    }
-  }
   
   componentDidMount() {
     this.props.getHomeList() 
@@ -42,7 +37,7 @@ class Home extends React.Component {
      <div className={style.bk}>
         {list&& list.map(item => <div key={item.id}>{item.username}</div>)}
         hello world!
-        {/* <Input/> */}
+        <Input/>
       </div> 
     )
       
