@@ -30,10 +30,7 @@ module.exports = {
             loader: 'style-loader',
           },
           {
-            loader: 'css-loader',
-            options: {
-              modules: true
-            }
+            loader: 'css-loader'
           },
           {
             loader: 'less-loader',
@@ -41,7 +38,7 @@ module.exports = {
         ],
         include: [
           path.resolve(__dirname, '../src'),
-          path.resolve(__dirname, '../node_modules')
+          path.resolve(__dirname, '../node_modules/antd/')
         ],
       },
     ],
