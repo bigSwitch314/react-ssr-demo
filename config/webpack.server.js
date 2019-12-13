@@ -12,15 +12,14 @@ module.exports = {
     filename:'server.js',
     path: DIST_PATH,
   },
-  externals: [nodeExternals({
-    whitelist: /antd\/lib(\/)*(.)*\/style\/index\.css/
-
-  })],
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['server.js'],
-    }),
+    })
   ],
+  externals: {
+    uws: "uws"
+  },
   module: {
     rules: [
       {
@@ -33,10 +32,7 @@ module.exports = {
         use: [
           'isomorphic-style-loader',
           {
-            loader: 'css-loader',
-            options: {
-              modules: true
-            }
+            loader: 'css-loader'
           },
           {
             loader: 'less-loader',
@@ -44,7 +40,7 @@ module.exports = {
         ],
         include: [
           path.resolve(__dirname, '../src'),
-          path.resolve(__dirname, '../node_modules/ant/**')
+          path.resolve(__dirname, '../node_modules/antd/')
         ],
       },
     ],

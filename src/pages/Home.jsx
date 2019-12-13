@@ -5,8 +5,8 @@ import { Input } from 'antd'
 import { getHomeList } from '../modules/home'
 import withStyle from '../withStyle'
 
-// import style from './home.less'
-import  style from'antd/lib/input/style/css';
+import style from './home.less'
+// import  'antd/lib/input/style/css';
 
 const menuCodes = {
   首页: '001',
