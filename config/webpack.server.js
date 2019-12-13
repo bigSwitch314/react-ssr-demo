@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals') // 保持node中require的引用方式
 
 const DIST_PATH = path.resolve(__dirname, '../dist')
+const SRC_PATH = path.resolve(__dirname, '../src')
 
 module.exports = {
   target:'node',
@@ -48,15 +49,13 @@ module.exports = {
   resolve: {
     symlinks: false,
     extensions: ['.js', '.jsx', 'json'],
-    // alias: {
-    //   '@': SRC_PATH,
-    //   pages: path.resolve(SRC_PATH, 'pages'),
-    //   store: path.resolve(SRC_PATH, 'store'),
-    //   images: path.resolve(SRC_PATH, 'assets/images'),
-    //   styles: path.resolve(SRC_PATH, 'styles'),
-    //   commponents: path.resolve(SRC_PATH, 'commponents'),
-    //   modules: path.resolve(SRC_PATH, 'modules'),
-    //   utils: path.resolve(SRC_PATH, 'utils'),
-    // },
+    alias: {
+      '@src': SRC_PATH,
+      '@pages': path.resolve(SRC_PATH, 'pages'),
+      '@utils': path.resolve(SRC_PATH, 'utils'),
+      '@components': path.resolve(SRC_PATH, 'components'),
+      '@assets': path.resolve(SRC_PATH, 'assets'),
+      '@styles': path.resolve(SRC_PATH, 'styles'),
+    },
   },
 }

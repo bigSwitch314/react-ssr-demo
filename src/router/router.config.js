@@ -1,10 +1,6 @@
 import loadComponent from '../loadComponent'
 
-// const Home = import('../pages/Home')
-// const Login = import('../pages/Login')
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import More from '../pages/More'
+import Home from '../containers/BasicLayout'
 
 export default [
   {
@@ -16,7 +12,7 @@ export default [
   }, {
     name:'登录',
     path: "login",
-    component: Login,
+    component: Home,
     key: 'login',
   }, {
     name:'更多',
@@ -25,7 +21,7 @@ export default [
       {
         name:'下载',
         path: "down",
-        component: More,
+        component: Home,
         key: 'login',
       }
     ],

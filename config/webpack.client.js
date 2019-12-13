@@ -2,6 +2,7 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const DIST_PATH = path.resolve(__dirname, '../dist')
+const SRC_PATH = path.resolve(__dirname, '../src')
 
 module.exports = {
   target: 'web',
@@ -46,5 +47,13 @@ module.exports = {
   resolve: {
     symlinks: false,
     extensions: ['.js', '.jsx', 'json'],
+    alias: {
+      '@src': SRC_PATH,
+      '@pages': path.resolve(SRC_PATH, 'pages'),
+      '@utils': path.resolve(SRC_PATH, 'utils'),
+      '@components': path.resolve(SRC_PATH, 'components'),
+      '@assets': path.resolve(SRC_PATH, 'assets'),
+      '@styles': path.resolve(SRC_PATH, 'styles'),
+    },
   },
 }

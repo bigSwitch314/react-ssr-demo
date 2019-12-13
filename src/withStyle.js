@@ -6,12 +6,14 @@
 
 import React, { Component } from 'react';
 
-export default (styles) => {
+export default (...styles) => {
   return (DecoratedComponent) => {
     return class NewComponent extends Component {
         componentWillMount() {
           if (this.props.staticContext) {
-            this.props.staticContext.css.push(styles._getCss())
+            styles && styles.forEach(style => {
+              this.props.staticContext.css.push(style._getCss())
+            })
           }
         }
 
