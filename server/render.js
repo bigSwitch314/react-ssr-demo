@@ -5,16 +5,9 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import router from '../src/router'
 import { Provider } from 'react-redux'
 import store from '../src/redux/storeServer'
+import Routers from '../src/routers'
 
-import getRoutesData from '../src/router/getRoutes'
-const menuCodes = {
-  首页: '001',
-  登录: '002',
-  更多: '003',
-  下载: '00301',
-}
-
-const { routesData } = getRoutesData(menuCodes)
+import BasicLayout from '../src/containers/BasicLayout'
 
 const render = (req, res) => {
   const matchRoutes = []
@@ -35,23 +28,7 @@ const render = (req, res) => {
         <StaticRouter location={req.path} context={context}>
           <div>
             <Switch>
-              {routesData.map(routes => routes.children.length > 0 ?
-                routes.children.map(route => (
-                  <Route
-                    extra
-                    key={route.key}
-                    path={route.fullPath}
-                    component={route.component}
-                  />
-                )) :
-                <Route
-                  extra
-                  key={routes.key}
-                  path={routes.fullPath}
-                  component={routes.component}
-                />,
-              )}
-              <Redirect to={routesData[0].fullPath} />
+              <Route path={'/'} component={BasicLayout} />
             </Switch>
           </div>
         </StaticRouter>

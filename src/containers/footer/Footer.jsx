@@ -3,8 +3,6 @@ import React from 'react'
 import withStyle from '../../withStyle'
 import style from './Footer.less'
 
-console.log('style2------', style)
-
 
 @withStyle(style)
 class Footer extends React.Component {
@@ -21,10 +19,6 @@ class Footer extends React.Component {
     }
 
     return null
-  }
-
-  componentDidMount() {
-
   }
 
   render() {

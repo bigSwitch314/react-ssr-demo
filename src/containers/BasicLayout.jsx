@@ -5,8 +5,18 @@ import withStyle from '../withStyle'
 
 import MyFooter from './footer/Footer'
 
-import Home from '@pages/home/Home.jsx'
+import getRoutesData from '../../src/router/getRoutes'
+const menuCodes = {
+  首页: '001',
+  登录: '002',
+  更多: '003',
+  下载: '00301',
+}
 
+// const { routesData } = getRoutesData(menuCodes)
+const { routesData } = []
+
+import style0 from '../styles/reset.css'
 import style1 from './BasicLayout.less'
 import  style2 from 'antd/lib/layout/style/index.css'
 import  style3 from 'antd/lib/menu/style/index.css'
@@ -17,7 +27,7 @@ const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
 const { Search } = Input
 
-@withStyle(style5, style4, style3, style2, style1)
+@withStyle(style0, style1, style2, style3, style4, style5)
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -90,50 +100,26 @@ class BasicLayout extends React.Component {
           <div className='content'>
             <div className='left'>
               <div className='card'>
-                <Switch>
-                  <Route
-                    extra
-                    key='1'
-                    path={'/home'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='2'
-                    path={'/category'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='3'
-                    path={'/label'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='4'
-                    path={'/archive'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='5'
-                    path={'/transshipment'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='6'
-                    path={'/openSource'}
-                    component={Home}
-                  />
-                  <Route
-                    extra
-                    key='7'
-                    path={'/about'}
-                    component={Home}
-                  />
-                </Switch>
+                {/* {<Switch>
+                  {routesData.map(routes => routes.children.length > 0 ?
+                    routes.children.map(route => (
+                      <Route
+                        extra
+                        key={route.key}
+                        path={route.fullPath}
+                        component={route.component}
+                      />
+                    )) :
+                    <Route
+                      extra
+                      key={routes.key}
+                      path={routes.fullPath}
+                      component={routes.component}
+                    />,
+                  )}
+                  <Redirect to={routesData[0].fullPath} />
+                </Switch>}    */}
+                
               </div>
               <div className='card'></div>
             </div>
@@ -145,7 +131,7 @@ class BasicLayout extends React.Component {
           </div>
         </Content>
         <Footer className="basic-layout-footer">
-          <MyFooter/>
+          <MyFooter {...this.props}/>
         </Footer>
       </Layout>
 

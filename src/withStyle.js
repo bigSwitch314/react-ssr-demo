@@ -13,6 +13,8 @@ export default (...styles) => {
           if (this.props.staticContext) {
             styles && styles.forEach(style => {
               this.props.staticContext.css.push(style._getCss())
+              // console.log('getCss--------', style._getCss())
+              debugger
             })
           }
         }
