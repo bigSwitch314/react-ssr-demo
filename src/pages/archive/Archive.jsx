@@ -3,7 +3,7 @@ import { List, Avatar, Icon } from 'antd'
 import withStyle from '../../withStyle'
 
 const testData = []
-import style0 from './Label.less'
+import style0 from './Archive.less'
 import style1 from 'antd/lib/list/style/index.css'
 import style2 from 'antd/lib/avatar/style/index.css'
 import style3 from 'antd/lib/icon/style/index.css'
@@ -36,7 +36,7 @@ class Label extends React.Component {
     return (
       <div className="home">
         {articleList.length === 0
-          ? (<div className="no-article">还未添加标签哦～</div>)
+          ? (<div className="no-article">暂无归档数据哦～</div>)
           : (articleList)}
       </div>
     )

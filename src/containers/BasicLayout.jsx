@@ -9,12 +9,16 @@ import getRoutesData from '../../src/router/getRoutes'
 const menuCodes = {
   首页: '001',
   分类: '002',
-  更多: '003',
-  下载: '00301',
+  标签: '004',
+  归档: '005',
+  转载: '006',
+  开源: '007',
+  关于: '008',
+  更多: '009',
+  下载: '00901',
 }
 
 const { routesData } = getRoutesData(menuCodes)
-// const { routesData } = []
 
 import style0 from '../styles/reset.css'
 import style1 from './BasicLayout.less'
@@ -100,7 +104,7 @@ class BasicLayout extends React.Component {
           <div className='content'>
             <div className='left'>
               <div className='card'>
-                {<Switch>
+                <Switch>
                   {routesData.map(routes => routes.children.length > 0 ?
                     routes.children.map(route => (
                       <Route
@@ -118,7 +122,7 @@ class BasicLayout extends React.Component {
                     />,
                   )}
                   <Redirect to={routesData[0].fullPath} />
-                </Switch>}
+                </Switch>
                 
               </div>
               <div className='card'></div>

@@ -38,7 +38,6 @@ class Home extends React.Component {
         {articleList.length === 0
           ? (<div className="no-article">还未添加分类哦～</div>)
           : (articleList)}
-        }
       </div>
     )
   }
