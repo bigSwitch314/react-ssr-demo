@@ -8,7 +8,7 @@ import MyFooter from './footer/Footer'
 import getRoutesData from '../../src/router/getRoutes'
 const menuCodes = {
   首页: '001',
-  登录: '002',
+  分类: '002',
   更多: '003',
   下载: '00301',
 }

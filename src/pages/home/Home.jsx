@@ -4,31 +4,31 @@ import withStyle from '../../withStyle'
 import './Home.less'
 
 const testData = [
-  // {
-  // category_id: 1,
-  // category_name: 'PHP',
-  // content: 'Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。↵分布式锁↵',
-  // create_time: '2018-12-30',
-  // edit_time: '2019-05-15',
-  // id: 46,
-  // label_name: 'fds,lable7222,lable7112,lable71s22',
-  // read_number: 0,
-  // release: 1,
-  // title: 'test2',
-  // type: 1,
-// }, {
-//   category_id: 1,
-//   category_name: 'PHP',
-//   content: 'Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。↵分布式锁↵',
-//   create_time: '2018-12-30',
-//   edit_time: '2019-08-15',
-//   id: 47,
-//   label_name: 'fds,lable7222,lable7112,lable71s22',
-//   read_number: 0,
-//   release: 1,
-//   title: 'test3',
-//   type: 1,
-// }
+    {
+    category_id: 1,
+    category_name: 'PHP',
+    content: 'Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。↵分布式锁↵',
+    create_time: '2018-12-30',
+    edit_time: '2019-05-15',
+    id: 46,
+    label_name: 'fds,lable7222,lable7112,lable71s22',
+    read_number: 0,
+    release: 1,
+    title: 'test2',
+    type: 1,
+  }, {
+    category_id: 1,
+    category_name: 'PHP',
+    content: 'Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。↵分布式锁↵',
+    create_time: '2018-12-30',
+    edit_time: '2019-08-15',
+    id: 47,
+    label_name: 'fds,lable7222,lable7112,lable71s22',
+    read_number: 0,
+    release: 1,
+    title: 'test3',
+    type: 1,
+  }
 ]
 
 import style0 from './Home.less'
