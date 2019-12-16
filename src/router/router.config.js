@@ -1,6 +1,6 @@
 import loadComponent from '../loadComponent'
 
-import Home from '../containers/BasicLayout'
+import Home from '../pages/home/Home'
 
 export default [
   {

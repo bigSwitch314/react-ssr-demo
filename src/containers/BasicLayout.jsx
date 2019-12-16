@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route, Link, Switch } from 'react-router-dom'
+import {Route, Link, Switch, Redirect } from 'react-router-dom'
 import { Layout, Menu, Input, Icon } from 'antd'
 import withStyle from '../withStyle'
 
@@ -13,8 +13,8 @@ const menuCodes = {
   下载: '00301',
 }
 
-// const { routesData } = getRoutesData(menuCodes)
-const { routesData } = []
+const { routesData } = getRoutesData(menuCodes)
+// const { routesData } = []
 
 import style0 from '../styles/reset.css'
 import style1 from './BasicLayout.less'
@@ -100,7 +100,7 @@ class BasicLayout extends React.Component {
           <div className='content'>
             <div className='left'>
               <div className='card'>
-                {/* {<Switch>
+                {<Switch>
                   {routesData.map(routes => routes.children.length > 0 ?
                     routes.children.map(route => (
                       <Route
@@ -118,7 +118,7 @@ class BasicLayout extends React.Component {
                     />,
                   )}
                   <Redirect to={routesData[0].fullPath} />
-                </Switch>}    */}
+                </Switch>}
                 
               </div>
               <div className='card'></div>

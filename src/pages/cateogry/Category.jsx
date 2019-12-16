@@ -1,7 +1,6 @@
 import React from 'react'
 import { List, Avatar, Icon } from 'antd'
 import withStyle from '../../withStyle'
-import './Home.less'
 
 const testData = [
   // {
@@ -30,11 +29,12 @@ const testData = [
 //   type: 1,
 // }
 ]
+import style0 from './Cayegory.less'
+import style1 from 'antd/lib/list/style/index.css'
+import style2 from 'antd/lib/avatar/style/index.css'
+import style3 from 'antd/lib/icon/style/index.css'
 
-import style0 from './Home.less'
-import  style1 from 'antd/lib/list/style/index.css'
-
-@withStyle(style0, style1)
+@withStyle(style0, style1, style2, style3)
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -62,7 +62,7 @@ class Home extends React.Component {
     return (
       <div className="home">
         {articleList.length === 0
-          ? (<div className="no-article">还未发布文章哦～</div>)
+          ? (<div className="no-article">还未发布文章哦555555～</div>)
           : (<div className="article">
             <List
               itemLayout="vertical"
