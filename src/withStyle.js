@@ -12,29 +12,13 @@ export default (...styles) => {
         componentWillMount() {
           if (this.props.staticContext) {
             styles && styles.forEach(style => {
-              this.props.staticContext.css.push(style._getCss())
-              // console.log('getCss--------', style._getCss())
-              debugger
+              this.props.staticContext.css.unshift(style._getCss())
             })
           }
         }
-
         render() {
           return <DecoratedComponent {...this.props} />
         }
       }
   }
 }
-
-// import React from 'react';
-
-// //使用高阶组件进行组件的样式添加
-// const withStyle = (OriginCom, style) => {
-//     return  (props) =>{
-//         if(props.staticContext) {
-//             props.staticContext.style.push(style._getCss());
-//         }
-//         return(<OriginCom {...props}/>)
-//     }
-// }
-// export default withStyle;
