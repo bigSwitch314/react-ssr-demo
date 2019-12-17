@@ -35,14 +35,18 @@ const render = (req, res) => {
       </Provider>
     )
 
+    // 样式写入单独文件
+    const fs = require("fs")
+    const rootPath = process.cwd()
     const cssStr = context.css.length ? context.css.join('\n') : ''
+    fs.writeFile(`${rootPath}/public/index.css`, cssStr, () => {})
 
     // 响应请求内容 
     const result = `
       <html>
       <head>
         <title>hello</title>
-        <style>${cssStr}</style>
+        <link href="/index.css" type="text/css" rel="stylesheet"></style>
       </head>
       <body>
         <div id="root">${content}</div>
