@@ -1,11 +1,11 @@
 import React from 'react'
 import {Route, Link, Switch, Redirect } from 'react-router-dom'
 import { Layout, Menu, Input, Icon } from 'antd'
-import withStyle from '../withStyle'
-
+import withStyle, { antdStyle } from '../withStyle'
 import MyFooter from './footer/Footer'
-
 import getRoutesData from '../../src/router/getRoutes'
+import style from './BasicLayout.less'
+
 const menuCodes = {
   首页: '001',
   分类: '002',
@@ -20,18 +20,12 @@ const menuCodes = {
 
 const { routesData } = getRoutesData(menuCodes)
 
-import style0 from '../styles/reset.css'
-import style1 from './BasicLayout.less'
-import  style2 from 'antd/lib/layout/style/index.css'
-import  style3 from 'antd/lib/menu/style/index.css'
-import  style4 from 'antd/lib/input/style/index.css'
-import  style5 from 'antd/lib/icon/style/index.css'
-
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
 const { Search } = Input
 
-@withStyle(style0, style1, style2, style3, style4, style5)
+
+@withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon'))
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props)

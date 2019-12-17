@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 
+/** 样式装饰器 */
 export default (...styles) => {
   return (DecoratedComponent) => {
     return class NewComponent extends Component {
@@ -21,4 +22,14 @@ export default (...styles) => {
         }
       }
   }
+}
+
+/** 导入antd组件样式 */
+export function antdStyle(...antd) {
+  const styles = []
+  antd && antd.forEach(item => {
+    const style = require(`antd/lib/${item}/style/index.css`)
+    styles.push(style)
+  })
+  return styles
 }
