@@ -47,6 +47,7 @@ const render = (req, res) => {
       <head>
         <title>hello</title>
         <link href="/index.css" type="text/css" rel="stylesheet"></style>
+        <link rel="stylesheet" type="text/css" href="/iconfont/iconfont.css">
       </head>
       <body>
         <div id="root">${content}</div>

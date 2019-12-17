@@ -45,54 +45,55 @@ class BasicLayout extends React.Component {
 
     return (
       <Layout className="basic-layout">
-        <Header className="basic-layout-header">
-          <i className="iconfont icon-logo logo" />
-          <Menu
-            onClick={this.handleClick}
-            selectedKeys={[this.state.current]}
-            mode="horizontal"
-            className="menu"
-          >
-            <Menu.Item key="1">
-              <Link to='/home'>首页</Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link to='/category'>分类</Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link to='/label'>标签</Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Link to='/archive'>归档</Link>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Link to='/transshipment'>转载</Link>
-            </Menu.Item>
-            <Menu.Item key="6">
-              <Link to='/openSource'>开源</Link>
-            </Menu.Item>
-            <Menu.Item key="7">
-              <Link to='/about'>关于</Link>
-            </Menu.Item>
-
-            <SubMenu
-              title={
-                <span className="submenu-title-wrapper">
-                  更多<Icon type="down" style={{ fontSize: 12, marginRight: 4 }}/>
-                </span>
-              }
+        <div className="shadow">
+          <Header className="basic-layout-header shadow">
+            <i className="iconfont icon-logo logo" />
+            <Menu
+              onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+              className="menu"
             >
-              <Menu.Item key="52">建议</Menu.Item>
-              <Menu.Item key="53">工具</Menu.Item>
-            </SubMenu>
-          </Menu>
-          <Search
-            placeholder=""
-            onSearch={value => console.log(value)}
-            className="search"
-          />
-          <i className="iconfont icon-user admin" />
-        </Header>
+              <Menu.Item key="1">
+                <Link to='/home'>首页</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to='/category'>分类</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link to='/label'>标签</Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to='/archive'>归档</Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to='/transshipment'>转载</Link>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Link to='/openSource'>开源</Link>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Link to='/about'>关于</Link>
+              </Menu.Item>
+
+              <SubMenu
+                title={
+                  <span className="submenu-title-wrapper">
+                    更多<Icon type="down" style={{ fontSize: 12, marginRight: 4 }}/>
+                  </span>
+                }
+              >
+                <Menu.Item key="52">建议</Menu.Item>
+                <Menu.Item key="53">工具</Menu.Item>
+              </SubMenu>
+            </Menu>
+            <Search
+              placeholder=""
+              onSearch={value => console.log(value)}
+              className="search"
+            />
+          </Header>
+        </div>
 
         <Content className="basic-layout-content">
           <div className='content'>

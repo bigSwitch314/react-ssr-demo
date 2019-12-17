@@ -8,8 +8,12 @@
   min-height: 100%;
   background: #fff;
 
+  .shadow {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+  }
+
   &-header {
-    width: 1344px;
+    width: 1200px;
     margin: 0 auto;
     position: relative;
     display: flex;
@@ -21,13 +25,6 @@
       top: -5px;
       font-size: 35px;
       position: relative;
-    }
-
-    .admin {
-      margin-top: -11px;
-      right: 0;
-      position: absolute;
-      font-size: 24px;
     }
 
     .menu {
@@ -46,8 +43,9 @@
       height: 30px;
       margin: 6px;
       position: absolute;
-      right: 30px;
+      right: -6px;
     }
+
   }
 
   &-content {
@@ -56,11 +54,11 @@
     min-height: calc(100% - 204px);
 
     .content {
-      width: 1344px;
+      width: 1200px;
       margin: 0 auto;
 
       .left {
-        width: calc(100% - 340px);
+        width: 860px;
         float: left;
 
         .card {
