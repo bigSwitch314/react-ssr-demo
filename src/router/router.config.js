@@ -8,6 +8,8 @@ import Transshipment from '../pages/transshipment/Transshipment'
 import OpenSource from '../pages/openSource/OpenSource'
 import About from '../pages/about/About'
 
+console.log('loadData----', Home.loadData)
+
 export default [
   {
     name: '首页',

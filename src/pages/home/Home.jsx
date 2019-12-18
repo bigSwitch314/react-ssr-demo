@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { List } from 'antd'
-import withStyle from '../../withStyle'
-import './Home.less'
+import withStyle, { antdStyle } from '../../withStyle'
+import style from './Home.less'
+import { getHomeList } from '@modules/home'
 
 const testData = [
   {
@@ -31,10 +33,16 @@ const testData = [
   },
 ]
 
-import style0 from './Home.less'
-import style1 from 'antd/lib/list/style/index.css'
 
-@withStyle(style0, style1)
+@withStyle(style, ...antdStyle('list'))
+@connect(
+  state => ({
+    list: state.list,
+  }), {
+    getHomeList,
+  }
+)
+
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -55,6 +63,11 @@ class Home extends React.Component {
     this.setState({
       articleList: testData,
     })
+    this.getHomeList()
+  }
+
+  getHomeList() {
+    this.props.getHomeList()
   }
 
   render() {
@@ -104,6 +117,10 @@ class Home extends React.Component {
       </div>
     )
   }
+}
+
+Home.loadData = (store) => {
+  return store.dispatch(getHomeList())
 }
 
 export default Home

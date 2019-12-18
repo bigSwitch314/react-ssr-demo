@@ -1,27 +1,29 @@
 import React from 'react'
 import { renderToString} from 'react-dom/server'
-import { StaticRouter, matchPath } from 'react-router-dom'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { StaticRouter, Route, Switch } from 'react-router-dom'
+import { matchRoutes } from 'react-router-config';
 import router from '../src/router'
 import { Provider } from 'react-redux'
 import store from '../src/redux/storeServer'
-import Routers from '../src/routers'
-
 import BasicLayout from '../src/containers/BasicLayout'
 
+const url = require('url')
+
 const render = (req, res) => {
-  const matchRoutes = []
+  let pathName = url.parse(req.header('referer')).pathname
+  pathName = pathName.substr(1)
   const promises = []
-  router.some(route=> {
-    matchPath(req.path, route) ? matchRoutes.push(route) : ''
-  })
-  matchRoutes.forEach( item=> {
-    if (item.loadData) {
-      promises.push(item.loadData(store))
+  const matchedRoutes = matchRoutes(router, pathName)
+  matchedRoutes.forEach(item => {
+    if (item.route.loadData) {
+      promises.push(item.route.loadData(store))
     }
   })
 
-  let context = { css: [] }
+  console.log('matchedRoutes----', matchedRoutes)
+  console.log('promises----', promises)
+
+  const context = { css: [] }
   Promise.all(promises).then(() => {
     const content = renderToString(
       <Provider store={store}>
@@ -54,12 +56,7 @@ const render = (req, res) => {
         <script src="/client.js"></script>
         <script src="/socket.io.js"></script>
         <script>
-          window.onload = function () {
-            var socket = io.connect();
-            socket.on('reload', function () {
-              window.location.reload();
-            })
-          }
+         
         </script>
         <textarea style="display:none" id="ssr-initialState">${JSON.stringify(store.getState())}</textarea>
       </body>

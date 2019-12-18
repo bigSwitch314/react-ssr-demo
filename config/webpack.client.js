@@ -62,6 +62,7 @@ module.exports = {
     alias: {
       '@src': SRC_PATH,
       '@pages': path.resolve(SRC_PATH, 'pages'),
+      '@modules': path.resolve(SRC_PATH, 'modules'),
       '@utils': path.resolve(SRC_PATH, 'utils'),
       '@components': path.resolve(SRC_PATH, 'components'),
       '@assets': path.resolve(SRC_PATH, 'assets'),
