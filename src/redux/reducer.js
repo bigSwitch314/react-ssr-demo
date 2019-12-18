@@ -8,7 +8,6 @@ const reducers = context.keys()
   .map(key => context(key).default)
   .filter(item => item)
 
-
 function handleReducer(models) {
   const {
     namespace,

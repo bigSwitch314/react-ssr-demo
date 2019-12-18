@@ -120,6 +120,7 @@ class Home extends React.Component {
 }
 
 Home.loadData = (store) => {
+  console.log('loadData-----')
   return store.dispatch(getHomeList())
 }
 

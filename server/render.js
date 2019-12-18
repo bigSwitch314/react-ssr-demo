@@ -10,7 +10,10 @@ import BasicLayout from '../src/containers/BasicLayout'
 const url = require('url')
 
 const render = (req, res) => {
-  let pathName = url.parse(req.header('referer')).pathname
+  let pathName = req.url
+  if (!pathName) {
+    pathName = url.parse(req.header('referer')).pathname
+  }
   pathName = pathName.substr(1)
   const promises = []
   const matchedRoutes = matchRoutes(router, pathName)
@@ -38,7 +41,7 @@ const render = (req, res) => {
     )
 
     // 样式写入单独文件
-    const fs = require("fs")
+    const fs = require('fs')
     const rootPath = process.cwd()
     const cssStr = context.css.length ? context.css.join('\n') : ''
     fs.writeFile(`${rootPath}/public/index.css`, cssStr, () => {})
