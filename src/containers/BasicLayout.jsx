@@ -118,7 +118,6 @@ class BasicLayout extends React.Component {
                   )}
                   <Redirect to={routesData[0].fullPath} />
                 </Switch>
-                
               </div>
               <div className='card'></div>
             </div>

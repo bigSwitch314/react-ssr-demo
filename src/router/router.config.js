@@ -1,4 +1,4 @@
-import loadComponent from '../loadComponent'
+// import loadComponent from '../loadComponent'
 
 import Home from '../pages/home/Home'
 import Category from '../pages/category/Category'
@@ -10,52 +10,52 @@ import About from '../pages/about/About'
 
 export default [
   {
-    name:'首页',
-    path: "home",
+    name: '首页',
+    path: 'home',
     component: Home,
     loadData: Home.loadData, // 服务端获取异步数据的函
     key: 'home',
   }, {
-    name:'分类',
-    path: "category",
+    name: '分类',
+    path: 'category',
     component: Category,
     key: 'category',
   }, {
-    name:'标签',
-    path: "label",
+    name: '标签',
+    path: 'label',
     component: Label,
     key: 'label',
   }, {
-    name:'归档',
-    path: "archive",
+    name: '归档',
+    path: 'archive',
     component: Archive,
     key: 'archive',
   }, {
-    name:'转载',
-    path: "transshipment",
+    name: '转载',
+    path: 'transshipment',
     component: Transshipment,
     key: 'transshipment',
   }, {
-    name:'开源',
-    path: "openSource",
+    name: '开源',
+    path: 'openSource',
     component: OpenSource,
     key: 'openSource',
   }, {
-    name:'关于',
-    path: "about",
+    name: '关于',
+    path: 'about',
     component: About,
     key: 'about',
   }, {
-    name:'更多',
+    name: '更多',
     path: 'more',
-    children:[
+    children: [
       {
-        name:'下载',
-        path: "down",
+        name: '下载',
+        path: 'down',
         component: Home,
         key: 'login',
-      }
+      },
     ],
     key: 'more',
-  }
+  },
 ]

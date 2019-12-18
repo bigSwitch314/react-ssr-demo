@@ -10,17 +10,17 @@ import React, { Component } from 'react';
 export default (...styles) => {
   return (DecoratedComponent) => {
     return class NewComponent extends Component {
-        componentWillMount() {
-          if (this.props.staticContext) {
-            styles && styles.forEach(style => {
-              this.props.staticContext.css.unshift(style._getCss())
-            })
-          }
-        }
-        render() {
-          return <DecoratedComponent {...this.props} />
+      UNSAFE_componentWillMount () {
+        if (this.props.staticContext) {
+          styles && styles.forEach(style => {
+            this.props.staticContext.css.unshift(style._getCss())
+          })
         }
       }
+      render() {
+        return <DecoratedComponent {...this.props} />
+      }
+    }
   }
 }
 

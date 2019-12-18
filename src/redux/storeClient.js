@@ -4,7 +4,7 @@ import monitorMiddleware from './middleware/monitor'
 import rootReducer from './reducer'
 
 
-//创建store，并引入中间件thunk进行异步操作的管理
+// 创建store，并引入中间件thunk进行异步操作的管理
 let initialState = document.getElementById('ssr-initialState') || JSON.stringify({})
 initialState = JSON.parse(initialState)
 

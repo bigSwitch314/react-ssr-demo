@@ -1,31 +1,30 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const nodeExternals = require('webpack-node-externals') // 保持node中require的引用方式
 
 const DIST_PATH = path.resolve(__dirname, '../dist')
 const SRC_PATH = path.resolve(__dirname, '../src')
 
 module.exports = {
-  target:'node',
-  mode:'development',
-  entry:'./server/app.js',
+  target: 'node',
+  mode: 'development',
+  entry: './server/app.js',
   output: {
-    filename:'server.js',
+    filename: 'server.js',
     path: DIST_PATH,
   },
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['server.js'],
-    })
+    }),
   ],
   externals: {
-    uws: "uws"
+    uws: 'uws',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader:'babel-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
       {
@@ -33,7 +32,7 @@ module.exports = {
         use: [
           'isomorphic-style-loader',
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
           },
           {
             loader: 'less-loader',
@@ -41,7 +40,7 @@ module.exports = {
         ],
       },
     ],
-},
+  },
   resolve: {
     symlinks: false,
     extensions: ['.js', '.jsx', 'json'],

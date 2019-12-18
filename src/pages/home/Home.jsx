@@ -1,10 +1,10 @@
 import React from 'react'
-import { List, Avatar, Icon } from 'antd'
+import { List } from 'antd'
 import withStyle from '../../withStyle'
 import './Home.less'
 
 const testData = [
-    {
+  {
     category_id: 1,
     category_name: 'PHP',
     content: 'Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。↵分布式锁↵',
@@ -28,11 +28,11 @@ const testData = [
     release: 1,
     title: 'test3',
     type: 1,
-  }
+  },
 ]
 
 import style0 from './Home.less'
-import  style1 from 'antd/lib/list/style/index.css'
+import style1 from 'antd/lib/list/style/index.css'
 
 @withStyle(style0, style1)
 class Home extends React.Component {
