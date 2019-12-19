@@ -29,7 +29,7 @@ const testData = [
     read_number: 0,
     release: 1,
     title: 'test3',
-    type: 1,
+    type: 2,
   },
 ]
 
