@@ -10,10 +10,11 @@ import BasicLayout from '../src/containers/BasicLayout'
 const url = require('url')
 
 const render = (req, res) => {
-  let pathName = url.parse(req.header('referer')).pathname
-  if (!pathName) {
-    pathName = req.url
-  }
+  console.log('req.headers.referer-------', req.headers.referer)
+  console.log('req.url-------', req.url)
+  const requestUrl = req.headers.referer || req.url
+  console.log('requestUrl-------', requestUrl)
+  let pathName = url.parse(requestUrl).pathname
   pathName = pathName.substr(1)
   const promises = []
   const matchedRoutes = matchRoutes(router, pathName)
@@ -23,8 +24,8 @@ const render = (req, res) => {
     }
   })
 
-  console.log('matchedRoutes----', matchedRoutes)
-  console.log('promises----', promises)
+  // console.log('matchedRoutes----', matchedRoutes)
+  // console.log('promises----', promises)
 
   const context = { css: [] }
   Promise.all(promises).then(() => {
