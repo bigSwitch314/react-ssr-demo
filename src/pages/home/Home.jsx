@@ -37,9 +37,9 @@ const testData = [
 @withStyle(style, ...antdStyle('list'))
 @connect(
   state => ({
-    list: state.list
+    list: state.list,
   }), {
-    getHomeList
+    getHomeList,
   }
 )
 

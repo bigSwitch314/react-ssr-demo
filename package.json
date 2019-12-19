@@ -17,7 +17,7 @@
   },
   "lint-staged": {
     "src/**/*.{jsx, js}": [
-      "eslint --fix -c=./config/.eslintrc2.js",
+      "eslint --fix -c=./config/.eslintrc.js",
       "git add"
     ]
   },
@@ -62,9 +62,11 @@
     "eslint-loader": "^3.0.3",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-react": "^7.17.0",
+    "husky": "^3.1.0",
     "isomorphic-style-loader": "^5.1.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^9.5.0",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.24",
