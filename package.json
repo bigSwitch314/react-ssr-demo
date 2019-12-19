@@ -17,7 +17,7 @@
   },
   "lint-staged": {
     "src/**/*.{jsx, js}": [
-      "eslint --fix -c=./config/.eslintrc.js",
+      "eslint --fix --max-warnings=0 -c=./config/.eslintrc.js",
       "git add"
     ]
   },
