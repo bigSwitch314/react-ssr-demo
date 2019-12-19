@@ -64,7 +64,7 @@ class Home extends React.Component {
       articleList: testData,
     })
     this.getHomeList()
-    const aa = 22
+    const aa66 = 22
   }
 
   getHomeList() {
