@@ -10,6 +10,17 @@
     "dev:build:server": "webpack --config config/webpack.server.js --watch",
     "dev:build:client": "webpack --config config/webpack.client.js --watch"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{jsx, js}": [
+      "eslint --fix -c=./config/.eslintrc.js",
+      "git add"
+    ]
+  },
   "author": "luoqiang",
   "license": "ISC",
   "dependencies": {

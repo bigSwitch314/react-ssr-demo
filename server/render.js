@@ -10,9 +10,9 @@ import BasicLayout from '../src/containers/BasicLayout'
 const url = require('url')
 
 const render = (req, res) => {
-  let pathName = req.url
+  let pathName = url.parse(req.header('referer')).pathname
   if (!pathName) {
-    pathName = url.parse(req.header('referer')).pathname
+    pathName = req.url
   }
   pathName = pathName.substr(1)
   const promises = []

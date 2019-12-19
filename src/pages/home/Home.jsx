@@ -39,7 +39,7 @@ const testData = [
   state => ({
     list: state.list,
   }), {
-    getHomeList,
+    getHomeList
   }
 )
 
