@@ -12,6 +12,8 @@ app.get('*', function(req, res) {
   // io.on('connection',function(socket) {
   //   console.log('a user connected')
   // })
+  if (req.url === '/favicon.ico') return res.send('favicon.ico')
+  if (req.url === '/socket.io.js.map') return res.send('socket.io.js.map')
   render(req, res)
 })
 
