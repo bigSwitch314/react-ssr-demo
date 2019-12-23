@@ -9,8 +9,7 @@ import Archive from '../pages/archive/Archive'
 import Transshipment from '../pages/transshipment/Transshipment'
 import OpenSource from '../pages/openSource/OpenSource'
 import About from '../pages/about/About'
-
-console.log('loadData----', Home.loadData)
+import ArticleDetail from '../pages/home/ArticleDetail'
 
 export default [
   {
@@ -19,6 +18,12 @@ export default [
     component: Home,
     loadData: Home.loadData, // 服务端获取异步数据的函
     key: 'home',
+  }, {
+    name: '文章详情',
+    path: 'articleDetail',
+    component: ArticleDetail,
+    loadData: ArticleDetail.loadData, // 服务端获取异步数据的函
+    key: 'articleDetail',
   }, {
     name: '分类',
     path: 'category',

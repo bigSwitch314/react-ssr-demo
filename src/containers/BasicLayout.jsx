@@ -16,6 +16,7 @@ const menuCodes = {
   关于: '008',
   更多: '009',
   下载: '00901',
+  文章详情: '010',
 }
 
 const { routesData } = getRoutesData(menuCodes)

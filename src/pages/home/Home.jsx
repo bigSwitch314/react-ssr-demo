@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { List } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
-import { getHomeList } from '@modules/home'
+import { getArticleList } from '@modules/article'
 
 const testData = [
   {
@@ -37,9 +37,9 @@ const testData = [
 @withStyle(style, ...antdStyle('list'))
 @connect(
   state => ({
-    list: state.list,
+    articleList: state.article.articleList,
   }), {
-    getHomeList,
+    getArticleList,
   }
 )
 
@@ -63,29 +63,31 @@ class Home extends React.Component {
     this.setState({
       articleList: testData,
     })
-    this.getHomeList()
+    this.getArticleList()
   }
 
-  getHomeList() {
-    this.props.getHomeList()
+  getArticleList() {
+    this.props.getArticleList()
   }
 
   render() {
-    const { articleList } = this.state
+    // const { articleList } = this.state
+    const { articleList: { list }} = this.props
+
     return (
       <div className="home">
-        {articleList.length === 0
+        {list && list.length === 0
           ? (<div className="no-article">还未发布文章哦～</div>)
           : (<div className="article">
             <List
               itemLayout="vertical"
               size="large"
-              dataSource={articleList}
+              dataSource={list}
               renderItem={item => (
                 <List.Item
                   key={item.title}
                   actions={[
-                    <a href="http://ant.design" key="href">阅读原文</a>,
+                    <a href={`/articleDetail?id=${item.id}`} key="href">阅读原文</a>,
                   ]}
                   /* extra={
                     <img
@@ -120,8 +122,8 @@ class Home extends React.Component {
 }
 
 Home.loadData = (store) => {
-  console.log('loadData-----')
-  return store.dispatch(getHomeList())
+  console.log('loadData00000000-----')
+  return store.dispatch(getArticleList())
 }
 
 export default Home

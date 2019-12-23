@@ -8,19 +8,19 @@ import store from '../src/redux/storeServer'
 import BasicLayout from '../src/containers/BasicLayout'
 
 const url = require('url')
+const querystring = require('querystring')
+
 
 const render = (req, res) => {
-  console.log('req.headers.referer-------', req.headers.referer)
-  console.log('req.url-------', req.url)
-  const requestUrl = req.headers.referer || req.url
-  console.log('requestUrl-------', requestUrl)
-  let pathName = url.parse(requestUrl).pathname
-  pathName = pathName.substr(1)
+  const { pathname: path, query } = url.parse(req.url)
+  const param = querystring.parse(query)
+  const pathname = path.substr(1)
+  // console.log('pathname------', pathname)
   const promises = []
-  const matchedRoutes = matchRoutes(router, pathName)
+  const matchedRoutes = matchRoutes(router, pathname)
   matchedRoutes.forEach(item => {
     if (item.route.loadData) {
-      promises.push(item.route.loadData(store))
+      promises.push(item.route.loadData(store, param))
     }
   })
 
@@ -47,7 +47,7 @@ const render = (req, res) => {
     const cssStr = context.css.length ? context.css.join('\n') : ''
     fs.writeFile(`${rootPath}/public/index.css`, cssStr, () => {})
 
-    // 响应请求内容 
+    // 响应请求内容
     const result = `
       <html>
       <head>
@@ -57,12 +57,9 @@ const render = (req, res) => {
       </head>
       <body>
         <div id="root">${content}</div>
-        <script src="/client.js"></script>
-        <script src="/socket.io.js"></script>
-        <script>
-         
-        </script>
         <textarea style="display:none" id="ssr-initialState">${JSON.stringify(store.getState())}</textarea>
+        <script src="/socket.io.js"></script>
+        <script src="/client.js"></script>
       </body>
       </html>
     `
