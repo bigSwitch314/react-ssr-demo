@@ -89,13 +89,6 @@ class Home extends React.Component {
                   actions={[
                     <a href={`/articleDetail?id=${item.id}`} key="href">阅读原文</a>,
                   ]}
-                  /* extra={
-                    <img
-                      width={272}
-                      alt="logo"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                    />
-                  } */
                 >
                   <List.Item.Meta
                     title={<a href="http://ant.design">{item.title}</a>}
