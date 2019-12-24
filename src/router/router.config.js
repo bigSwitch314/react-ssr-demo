@@ -10,6 +10,8 @@ import Transshipment from '../pages/transshipment/Transshipment'
 import OpenSource from '../pages/openSource/OpenSource'
 import About from '../pages/about/About'
 import ArticleDetail from '../pages/home/ArticleDetail'
+import Suggestion from '../pages/suggestion/Suggestion'
+import Tool from '../pages/tool/Tool'
 
 export default [
   {
@@ -59,10 +61,15 @@ export default [
     path: 'more',
     children: [
       {
-        name: '下载',
-        path: 'down',
-        component: Home,
-        key: 'login',
+        name: '建议',
+        path: 'suggestion',
+        component: Suggestion,
+        key: 'suggestion',
+      }, {
+        name: '工具',
+        path: 'tool',
+        component: Tool,
+        key: 'tool',
       },
     ],
     key: 'more',

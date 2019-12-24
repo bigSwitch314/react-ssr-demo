@@ -4,6 +4,7 @@ import { Layout, Menu, Input, Icon } from 'antd'
 import withStyle, { antdStyle } from '../withStyle'
 import MyFooter from './footer/Footer'
 import getRoutesData from '../../src/router/getRoutes'
+import { getParentKey } from '../../src/router/utils'
 import style from './BasicLayout.less'
 
 const menuCodes = {
@@ -15,8 +16,9 @@ const menuCodes = {
   开源: '007',
   关于: '008',
   更多: '009',
-  下载: '00901',
-  文章详情: '010',
+  建议: '00901',
+  工具: '00902',
+  文章详情: '00101',
 }
 
 const { routesData } = getRoutesData(menuCodes)
@@ -35,45 +37,39 @@ class BasicLayout extends React.Component {
     }
   }
 
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
-  }
-
   render() {
+    const { location: { pathname} } = this.props
+    const parentKey = getParentKey(pathname)
 
     return (
       <Layout className="basic-layout">
         <div className="shadow">
-          <Header className="basic-layout-header shadow">
+          <Header className="basic-layout-header">
             <i className="iconfont icon-logo logo" />
             <Menu
-              onClick={this.handleClick}
-              selectedKeys={[this.state.current]}
+              selectedKeys={[parentKey]}
               mode="horizontal"
               className="menu"
             >
-              <Menu.Item key="1">
+              <Menu.Item key="home">
                 <Link to='/home'>首页</Link>
               </Menu.Item>
-              <Menu.Item key="2">
+              <Menu.Item key="category">
                 <Link to='/category'>分类</Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key="label">
                 <Link to='/label'>标签</Link>
               </Menu.Item>
-              <Menu.Item key="4">
+              <Menu.Item key="archive">
                 <Link to='/archive'>归档</Link>
               </Menu.Item>
-              <Menu.Item key="5">
+              <Menu.Item key="transshipment">
                 <Link to='/transshipment'>转载</Link>
               </Menu.Item>
-              <Menu.Item key="6">
+              <Menu.Item key="openSource">
                 <Link to='/openSource'>开源</Link>
               </Menu.Item>
-              <Menu.Item key="7">
+              <Menu.Item key="about">
                 <Link to='/about'>关于</Link>
               </Menu.Item>
 
@@ -84,8 +80,12 @@ class BasicLayout extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="52">建议</Menu.Item>
-                <Menu.Item key="53">工具</Menu.Item>
+                <Menu.Item key="more/suggestion">
+                  <Link to='/more/suggestion'>建议</Link>
+                </Menu.Item>
+                <Menu.Item key="more/tool">
+                  <Link to='/more/tool'>工具</Link>
+                </Menu.Item>
               </SubMenu>
             </Menu>
             <Search

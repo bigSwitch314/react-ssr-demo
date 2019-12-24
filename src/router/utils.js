@@ -3,19 +3,28 @@
  */
 
 
-import React from 'react'
+// import React from 'react'
 // import { Menu } from 'antd'
 import { matchPath } from 'react-router'
-import { Link } from 'react-router-dom'
-import { routerConfig } from './router.config'
+// import { Link } from 'react-router-dom'
+import routerConfig from './router.config'
 
 
 export function getParentKey(url, configs = routerConfig) {
   const urls = url.split('/')
   let parentKey = ''
   configs.forEach(routes => {
-    if (urls.indexOf(routes.path) > -1) {
-      parentKey = routes.path
+    const { path, children } = routes
+    if (urls.indexOf(path) > -1) {
+      parentKey = path
+      // 子路由
+      if (children) {
+        children.forEach(item => {
+          if (urls.indexOf(item.path) > -1) {
+            parentKey = `${parentKey}/${item.path}`
+          }
+        })
+      }
     }
   })
   return parentKey
