@@ -87,21 +87,14 @@ class Home extends React.Component {
                 <List.Item
                   key={item.title}
                   actions={[
-                    <a href={`/articleDetail?id=${item.id}`} key="href">阅读原文</a>,
+                    <span key={1}> 6天前 </span>,
+                    <span key={2}> FRONTEND/JAVASCRIPT </span>,
+                    <span key={3}> 阅读约 21 分钟 </span>,
                   ]}
                 >
                   <List.Item.Meta
                     title={<a href="http://ant.design">{item.title}</a>}
-                    description={<div>
-                      <i className="iconfont icon-user logo" />
-                      创建于{item.create_time}
-                      <span style={{ margin: 14 }}>|</span>
-                      <i className="iconfont icon-user logo" />
-                      分类于{item.category_name}
-                      <span style={{ margin: 14 }}>|</span>
-                      <i className="iconfont icon-eye logo" />
-                      阅读次数{item.read_number}
-                    </div>}
+                    description={null}
                   />
                   {item.content}
                 </List.Item>
