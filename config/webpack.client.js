@@ -1,11 +1,13 @@
 const path = require('path')
+const merge = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+const baseConfig = require('./webpack.base.js')
 const DIST_PATH = path.resolve(__dirname, '../dist')
 const SRC_PATH = path.resolve(__dirname, '../src')
 const CONF_PATH = path.resolve(__dirname, '../config')
 
-module.exports = {
+const config = {
   target: 'web',
   mode: 'development',
   entry: './src/index.js',
@@ -56,17 +58,6 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    symlinks: false,
-    extensions: ['.js', '.jsx', 'json'],
-    alias: {
-      '@src': SRC_PATH,
-      '@pages': path.resolve(SRC_PATH, 'pages'),
-      '@modules': path.resolve(SRC_PATH, 'modules'),
-      '@utils': path.resolve(SRC_PATH, 'utils'),
-      '@components': path.resolve(SRC_PATH, 'components'),
-      '@assets': path.resolve(SRC_PATH, 'assets'),
-      '@styles': path.resolve(SRC_PATH, 'styles'),
-    },
-  },
 }
+
+module.exports = merge(baseConfig, config)

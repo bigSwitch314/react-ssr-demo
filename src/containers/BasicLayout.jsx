@@ -1,11 +1,14 @@
 import React from 'react'
 import {Route, Link, Switch, Redirect } from 'react-router-dom'
-import { Layout, Menu, Input, Icon } from 'antd'
+import { Layout, Menu, Input, Icon, Button } from 'antd'
 import withStyle, { antdStyle } from '../withStyle'
 import MyFooter from './footer/Footer'
 import getRoutesData from '../../src/router/getRoutes'
 import { getParentKey } from '../../src/router/utils'
 import style from './BasicLayout.less'
+import avatar from '@assets/image/avatar.jpg'
+import { placeIcon} from '@assets/svg/path'
+
 
 const menuCodes = {
   首页: '001',
@@ -28,7 +31,7 @@ const { SubMenu } = Menu
 const { Search } = Input
 
 
-@withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon'))
+@withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon', 'button'))
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -123,7 +126,39 @@ class BasicLayout extends React.Component {
               <div className='card'></div>
             </div>
             <div className='right'>
-              <div className='card'>11111</div>
+              <div className='card'>
+                <div className="author">
+                  <img alt="罗强"style={{ marginBottom: 10, width: 128}}src={avatar}/>
+                  <span className="block name">罗强</span>
+                  <span className="block">Web Front-End</span>
+                  <span className="block place">
+                    <svg viewBox="0 0 1024 1024" width="16" height="16">
+                      <path d={placeIcon} fill="#7a7a7a" />
+                    </svg>
+                    China
+                  </span>
+                </div>
+                <div className="statistic">
+                  <div className="stat">
+                    <span className="block">文章</span>
+                    <span className="block number">10</span>
+                  </div>
+                  <div className="stat">
+                    <span className="block">分类</span>
+                    <span className="block number">12</span>
+                  </div>
+                  <div className="stat">
+                    <span className="block">标签</span>
+                    <span className="block number">37</span>
+                  </div>
+                </div>
+                <div className="attention">
+                  <Button type="primary" className="button">关注</Button>
+                </div>
+                <div className="link">
+                  连接
+                </div>
+              </div>
               <div className='card'>22222</div>
               <div className='card'>33333</div>
             </div>
