@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { List } from 'antd'
+import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
 import { getArticleList } from '@modules/article'
@@ -34,7 +34,7 @@ const testData = [
 ]
 
 
-@withStyle(style, ...antdStyle('list'))
+@withStyle(style, ...antdStyle('list', 'pagination'))
 @connect(
   state => ({
     articleList: state.article.articleList,
@@ -102,6 +102,9 @@ class Home extends React.Component {
             />
           </div>)
         }
+        <div className="pagination">
+          <Pagination defaultCurrent={1} total={500} />
+        </div>
       </div>
     )
   }
