@@ -2,7 +2,6 @@
 .ant-menu-vertical .ant-menu-item {
   font-size: 16px;
 }
-
 .basic-layout {
   min-width: 1366px;
   min-height: 100%;
@@ -106,7 +105,7 @@
             margin-bottom: 20px;
 
             .stat {
-              float: right;
+              float: left;
               width: 93px;
               height: 54px;
             }
@@ -115,14 +114,23 @@
               font-size: 18px;
               font-weight: 550;
             }
-
           }
 
           .attention {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             .button {
               width: 270px;
               border-radius: 20px;
+            }
+          }
+
+          .linkage {
+            height: 1px;
+            margin-bottom: 20px;
+
+            .link {
+              float: left;
+              width: 93px;
             }
           }
 
@@ -186,6 +194,14 @@
 
 .ant-layout-footer {
   padding: 10px 0;
+}
+
+.link-tip {
+  .ant-tooltip-inner {
+    min-width: 30px;
+    min-height: 24px;
+    padding: 0px 3px;
+  }
 }
 
 // reset.css

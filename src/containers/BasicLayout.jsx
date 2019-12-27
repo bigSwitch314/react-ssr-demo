@@ -1,13 +1,14 @@
 import React from 'react'
 import {Route, Link, Switch, Redirect } from 'react-router-dom'
-import { Layout, Menu, Input, Icon, Button } from 'antd'
+import { Layout, Menu, Input, Icon, Button, Tooltip } from 'antd'
 import withStyle, { antdStyle } from '../withStyle'
 import MyFooter from './footer/Footer'
 import getRoutesData from '../../src/router/getRoutes'
 import { getParentKey } from '../../src/router/utils'
 import style from './BasicLayout.less'
 import avatar from '@assets/image/avatar.jpg'
-import { placeIcon} from '@assets/svg/path'
+import sf from '@assets/image/sf.jpg'
+import { placeIcon, githubIcon, juejinIcon } from '@assets/svg/path'
 
 
 const menuCodes = {
@@ -31,7 +32,7 @@ const { SubMenu } = Menu
 const { Search } = Input
 
 
-@withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon', 'button'))
+@withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon', 'button', 'tooltip'))
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -128,7 +129,7 @@ class BasicLayout extends React.Component {
             <div className='right'>
               <div className='card'>
                 <div className="author">
-                  <img alt="罗强"style={{ marginBottom: 10, width: 128}}src={avatar}/>
+                  <img alt="罗强"style={{ marginBottom: 10, width: 128, borderRadius: 4}}src={avatar}/>
                   <span className="block name">罗强</span>
                   <span className="block">Web Front-End</span>
                   <span className="block place">
@@ -155,8 +156,26 @@ class BasicLayout extends React.Component {
                 <div className="attention">
                   <Button type="primary" className="button">关注</Button>
                 </div>
-                <div className="link">
-                  连接
+                <div className="linkage">
+                  <div className="link">
+                    <Tooltip placement="bottom" title="github" overlayClassName="link-tip">
+                      <svg viewBox="0 0 1024 1024" width="16" height="16">
+                        <path d={githubIcon} fill="#231F20" />
+                      </svg>
+                    </Tooltip>
+                  </div>
+                  <div className="link">
+                    <Tooltip placement="bottom" title="segmentfault" overlayClassName="link-tip">
+                      <img src={sf} width={14} />
+                    </Tooltip>
+                  </div>
+                  <div className="link">
+                    <Tooltip placement="bottom" title="juejin" overlayClassName="link-tip">
+                      <svg viewBox="0 0 45 38" width="18px" height="14px" >
+                        <path d={juejinIcon} fill="#006CFF"></path>
+                      </svg>
+                    </Tooltip>
+                  </div>
                 </div>
               </div>
               <div className='card'>22222</div>
