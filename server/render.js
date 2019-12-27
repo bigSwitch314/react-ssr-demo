@@ -59,6 +59,14 @@ const render = (req, res) => {
         <div id="root">${content}</div>
         <textarea style="display:none" id="ssr-initialState">${JSON.stringify(store.getState())}</textarea>
         <script src="/socket.io.js"></script>
+        <script>
+          window.onload = function () {
+            var socket = io.connect()
+            socket.on('reload', function () {
+              window.location.reload()
+            })
+          }
+        </script>
         <script src="/client.js"></script>
       </body>
       </html>

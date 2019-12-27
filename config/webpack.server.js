@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const baseConfig = require('./webpack.base.js')
 const DIST_PATH = path.resolve(__dirname, '../dist')
-const SRC_PATH = path.resolve(__dirname, '../src')
 
 const config = {
   target: 'node',
