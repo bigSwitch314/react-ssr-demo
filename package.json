@@ -8,7 +8,8 @@
     "dev": "npm-run-all --parallel dev:**",
     "dev:start": "nodemon --watch dist --exec node \"./dist/server.js\"",
     "dev:build:server": "webpack --config config/webpack.server.js --watch",
-    "dev:build:client": "webpack --config config/webpack.client.js --watch"
+    "dev:build:client": "webpack --config config/webpack.client.js --watch",
+    "lint:less": "stylelint --fix src/**/*.less, src/**/*.less --config=./config/stylelint.config.js"
   },
   "husky": {
     "hooks": {
@@ -18,6 +19,14 @@
   "lint-staged": {
     "src/**/*.{jsx, js}": [
       "eslint --fix --max-warnings=0 -c=./config/.eslintrc.js",
+      "git add"
+    ],
+    "src/**/*.css": [
+      "stylelint --fix src/**/*.css --config=./config/stylelint.config.js",
+      "git add"
+    ],
+    "src/**/*.less": [
+      "stylelint --fix src/**/*.less --config=./config/stylelint.config.js",
       "git add"
     ]
   },
@@ -74,6 +83,8 @@
     "postcss": "^7.0.24",
     "postcss-loader": "^3.0.0",
     "style-loader": "^1.0.1",
+    "stylelint": "^12.0.1",
+    "stylelint-config-standard": "^19.0.0",
     "url-loader": "^3.0.0",
     "webpack-merge": "^4.2.2"
   }
