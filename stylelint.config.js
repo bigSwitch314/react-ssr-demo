@@ -4,6 +4,7 @@
 module.exports = {
   processors: [],
   plugins: [],
+  ignorePath: ['./src/components/markdown/**'], // 用于命令行忽略检测
   defaultSeverity: 'error',
   extends: 'stylelint-config-standard', // 这是官方推荐的方式
   'rules': {
