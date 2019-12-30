@@ -21,12 +21,8 @@
       "eslint --fix --max-warnings=0 -c=./config/.eslintrc.js",
       "git add"
     ],
-    "src/**/*.css": [
-      "stylelint --fix src/**/*.css --config=./config/stylelint.config.js",
-      "git add"
-    ],
-    "src/**/*.less": [
-      "stylelint --fix src/**/*.less --config=./config/stylelint.config.js",
+    "src/**/*.{less, css}": [
+      "stylelint --fix --config=./config/stylelint.config.js",
       "git add"
     ]
   },
