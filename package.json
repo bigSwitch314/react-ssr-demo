@@ -8,8 +8,7 @@
     "dev": "npm-run-all --parallel dev:**",
     "dev:start": "nodemon --watch dist --exec node \"./dist/server.js\"",
     "dev:build:server": "webpack --config config/webpack.server.js --watch",
-    "dev:build:client": "webpack --config config/webpack.client.js --watch",
-    "lint:less": "stylelint --fix src/**/*.less, src/**/*.less --config=./config/stylelint.config.js"
+    "dev:build:client": "webpack --config config/webpack.client.js --watch"
   },
   "husky": {
     "hooks": {
@@ -21,12 +20,8 @@
       "eslint --fix --max-warnings=0 -c=./config/.eslintrc.js",
       "git add"
     ],
-    "src/**/*.css": [
-      "stylelint --fix src/**/*.css --config=./config/stylelint.config.js",
-      "git add"
-    ],
-    "src/**/*.less": [
-      "stylelint --fix src/**/*.less --config=./config/stylelint.config.js",
+    "src/**/*.{less, css}": [
+      "stylelint --fix --config=./stylelint.config.js",
       "git add"
     ]
   },
