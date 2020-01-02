@@ -32,6 +32,8 @@ class ArticleDetail extends React.Component {
   componentDidMount() {
     // this.getArticleDetail()
     console.log('history--------', this.props.history)
+    const { articleDetail } = this.props
+    console.log('articleDetail------', articleDetail)
   }
 
   getArticleDetail() {
@@ -39,12 +41,11 @@ class ArticleDetail extends React.Component {
   }
 
   render() {
-    const { articleDetail } = this.props
-    console.log('articleDetail------', articleDetail)
+    const { articleDetail: { content_md } } = this.props
 
     return (
       <div className="home">
-        ArticleDetail
+        {content_md}
       </div>
     )
   }

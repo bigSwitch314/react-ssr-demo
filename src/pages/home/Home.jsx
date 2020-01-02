@@ -93,7 +93,7 @@ class Home extends React.Component {
                   ]}
                 >
                   <List.Item.Meta
-                    title={<a href="http://ant.design">{item.title}</a>}
+                    title={<a href={`/articleDetail?id=${item.id}`}>{item.title}</a>}
                     description={null}
                   />
                   {item.content}

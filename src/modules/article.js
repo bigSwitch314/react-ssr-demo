@@ -4,14 +4,14 @@ export default {
   namespace: 'article',
   initState: {
     articleList: {},
-    articleDetial: {},
+    articleDetail: {},
   },
   reducer: {
     getArticleList(state, { payload }) {
       return ({ ...state, articleList: payload })
     },
     getArticleDetail(state, { payload }) {
-      return ({ ...state, articleDetial: payload })
+      return ({ ...state, articleDetail: payload })
     },
   },
 }
