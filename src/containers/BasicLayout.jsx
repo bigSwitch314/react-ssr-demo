@@ -1,10 +1,9 @@
 import React from 'react'
-import {Route, Link, Switch, Redirect } from 'react-router-dom'
-import { Layout, Menu, Input, Icon, Button, Tooltip } from 'antd'
+import {Route, Switch, Redirect } from 'react-router-dom'
+import { Layout, Menu, Input, Button, Tooltip } from 'antd'
 import withStyle, { antdStyle } from '../withStyle'
 import MyFooter from './footer/Footer'
-import getRoutesData from '../../src/router/getRoutes'
-import { getParentKey } from '../../src/router/utils'
+import { getMenus, getRoutes, getParentKey } from '../../src/router/utils'
 import style from './BasicLayout.less'
 import avatar from '@assets/image/avatar.jpg'
 import sf from '@assets/image/sf.jpg'
@@ -25,14 +24,16 @@ const menuCodes = {
   文章详情: '00101',
 }
 
-const { routesData } = getRoutesData(menuCodes)
+const { routesData } = getRoutes(menuCodes)
+const menuData = getMenus('!/user')
 
 const { Header, Content, Footer } = Layout
-const { SubMenu } = Menu
 const { Search } = Input
 
 
+// 菜单需引入menu icon样式
 @withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon', 'button', 'tooltip'))
+
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -55,42 +56,7 @@ class BasicLayout extends React.Component {
               mode="horizontal"
               className="menu"
             >
-              <Menu.Item key="home">
-                <Link to='/home'>首页</Link>
-              </Menu.Item>
-              <Menu.Item key="category">
-                <Link to='/category'>分类</Link>
-              </Menu.Item>
-              <Menu.Item key="label">
-                <Link to='/label'>标签</Link>
-              </Menu.Item>
-              <Menu.Item key="archive">
-                <Link to='/archive'>归档</Link>
-              </Menu.Item>
-              <Menu.Item key="transshipment">
-                <Link to='/transshipment'>转载</Link>
-              </Menu.Item>
-              <Menu.Item key="openSource">
-                <Link to='/openSource'>开源</Link>
-              </Menu.Item>
-              <Menu.Item key="about">
-                <Link to='/about'>关于</Link>
-              </Menu.Item>
-
-              <SubMenu
-                title={
-                  <span className="submenu-title-wrapper">
-                    更多<Icon type="down" style={{ fontSize: 12, marginRight: 4 }}/>
-                  </span>
-                }
-              >
-                <Menu.Item key="more/suggestion">
-                  <Link to='/more/suggestion'>建议</Link>
-                </Menu.Item>
-                <Menu.Item key="more/tool">
-                  <Link to='/more/tool'>工具</Link>
-                </Menu.Item>
-              </SubMenu>
+              {menuData}
             </Menu>
             <Search
               placeholder=""

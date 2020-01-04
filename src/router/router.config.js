@@ -26,6 +26,7 @@ export default [
     component: ArticleDetail,
     loadData: ArticleDetail.loadData, // 服务端获取异步数据的函
     key: 'articleDetail',
+    hidden: true, // 不在菜单上显示
   }, {
     name: '分类',
     path: 'category',

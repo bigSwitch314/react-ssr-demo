@@ -63,20 +63,27 @@ class ArticleDetail extends React.Component {
   }
 
   render() {
-    const { articleDetail: { content_md } } = this.props
+    const { content_md, title } = this.props.articleDetail
 
     return (
-      <div
-        className="container for-preview for-markdown-preview"
-        dangerouslySetInnerHTML={{ __html: handleCode(marked(content_md)) }}
-      />
+      <div className="container">
+        <div className="title">{title}</div>
+        <div className="metadata">
+          <span className="block">FRONTEND/JAVASCRIPT</span>
+          <span className="block">阅读约4分钟</span>
+        </div>
+        <div
+          className="for-preview for-markdown-preview"
+          dangerouslySetInnerHTML={{ __html: handleCode(marked(content_md)) }}
+        />
+      </div>
     )
   }
 }
 
 ArticleDetail.loadData = (store, param={}) => {
   console.log('getArticleDetail----11111111-------', param)
-  return store.dispatch(getArticleDetail(param))
+  // return store.dispatch(getArticleDetail(param))
 }
 
 export default ArticleDetail

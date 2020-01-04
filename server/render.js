@@ -15,7 +15,6 @@ const render = (req, res) => {
   const { pathname: path, query } = url.parse(req.url)
   const param = querystring.parse(query)
   const pathname = path.substr(1)
-  // console.log('pathname------', pathname)
   const promises = []
   const matchedRoutes = matchRoutes(router, pathname)
   matchedRoutes.forEach(item => {
@@ -23,9 +22,6 @@ const render = (req, res) => {
       promises.push(item.route.loadData(store, param))
     }
   })
-
-  // console.log('matchedRoutes----', matchedRoutes)
-  // console.log('promises----', promises)
 
   const context = { css: [] }
   Promise.all(promises).then(() => {

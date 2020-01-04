@@ -3,10 +3,10 @@
  */
 
 
-// import React from 'react'
-// import { Menu } from 'antd'
+import React from 'react'
+import { Menu, Icon } from 'antd'
 import { matchPath } from 'react-router'
-// import { Link } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import routerConfig from './router.config'
 
 
@@ -40,14 +40,6 @@ export function getCurrentRoute(url, routes) {
 }
 
 /**
- * 判断是否是第n级子地址
- * @param {url} 地址
- */
-// export function isDeepChild(url) {
-//   return routeMap.get(url) && routeMap.get(url).isDeepChild || false
-// }
-
-/**
  * 得到路由匹配的栈
  * @param {*} url
  * @param {*routes} 使用的路由
@@ -69,56 +61,118 @@ export function getRouteStack(url, routes) {
   return routeStack
 }
 
-export function getRoutes(path, routerData) {
-  const newPath = typeof path === 'string' ? new RegExp(path) : path
-  // remove the same path, root route has used  eg. has use path='/user' remove '/user'
-  // Replace path to '' eg. path='user' /user/name => name
-  const routes = routerData
-    .filter(route => newPath.test(route.path))
-    .map(item => item.path)
-  // Get the route to be rendered to remove the deep rendering
-  // getRenderArr(routes)
-  // Conversion and stitching parameters
-  const renderRoutes = routes.map(route => {
-    const index = routerData.findIndex(item => item.path.indexOf(`${route}`) > -1)
-    return routerData[index]
+/**
+ * 获取菜单
+ * @param {*} path 禁止访问菜单
+ * @param {*} routes 路由配置
+ */
+export function getMenus(path, routes=routerConfig) {
+  let shoudMatch = true
+  path.replace(/^\/+|\/+/g, '')
+  let matchedPath = path
+  if (path.indexOf('!') === 0) {
+    shoudMatch = false
+    matchedPath = path.substr(1)
+  }
+  if (shoudMatch) {
+    routes = routes.filter(items => items.path === matchedPath)
+  } else {
+    routes = routes.filter(items => items.path !== matchedPath)
+  }
+  const res = routes.map(route => {
+    if (!route.name || route.hidden) return null // 这里需要抛出警告
+    if (!route.component) {
+      return (
+        route.children.length > 0 &&
+        <Menu.SubMenu
+          title={
+            <span className="submenu-title-wrapper">
+              {route.name}<Icon type="down" style={{ fontSize: 12, marginRight: 4 }}/>
+            </span>}
+          key={route.path}
+        >
+          {route.children.map(item => (
+            <Menu.Item key={`${route.path}/${item.path}`}>
+              <Link to={`/${route.path}/${item.path}`}>{item.name}</Link>
+            </Menu.Item>
+          ))}
+        </Menu.SubMenu>
+      )
+    }
+    return (
+      <Menu.Item key={route.path}>
+        <Link to={`/${route.path}`}>{route.name}</Link>
+      </Menu.Item>
+    )
   })
-  return renderRoutes
+
+  return res
 }
 
-// export function getMenus(path, routes) {
-//   let shoudMatch = true
-//   path.replace(/^\/+|\/+/g, '')
-//   let matchedPath = path
-//   if (path.indexOf('!') === 0) {
-//     shoudMatch = false
-//     matchedPath = path.substr(1)
-//   }
-//   if (shoudMatch) {
-//     routes = routes.filter(items => items.path === matchedPath)
-//   } else {
-//     routes = routes.filter(items => items.path !== matchedPath)
-//   }
-//   const res = routes.map(route => {
-//     if (!route.name) return null // 这里需要抛出警告
-//     if (!route.component) {
-//       return (
-//         route.children.length > 0 &&
-//         <Menu.SubMenu title={<span>{route.icon}<span>{route.name}</span></span>} key={route.path}>
-//           {route.children.map(item => (
-//             <Menu.Item key={item.path}>
-//               <Link to={item.fullPath}>{item.name}</Link>
-//             </Menu.Item>
-//           ))}
-//         </Menu.SubMenu>
-//       )
-//     }
-//     return (
-//       <Menu.Item key={route.path}>
-//         <Link to={route.fullPath}>{route.icon}<span>{route.name}</span></Link>
-//       </Menu.Item>
-//     )
-//   })
+/**
+ * 获取路由
+ *
+ * @param {*} routerCon 路由配置
+ * @param {*} auths 无权访问的路由
+ */
+export function getRoutes(auths={}, routerCon=routerConfig) {
+  const routeMap= new Map()
+  const routesData = routerCon.reduce((routers, items) => {
+    const { component: Component, children = [], name } = items
+    const route = {
+      ...items,
+      key: items.path,
+      path: items.path,
+      fullPath: `/${items.path}`,
+      component: Component,
+      name: items.name,
+      children: [],
+    }
+    if (!auths[name]) return routers
+    routers.push(route)
+    routeMap.set(route.fullPath, {
+      ...route,
+      isDeepChild: false,
+    })
 
-//   return res
-// }
+    if (Component) {
+      route.component = props => (
+        <Component {...props}>
+          <Switch>
+            {children.map(item => (
+              <Route
+                key={`/${items.path}/${item.path}`}
+                path={`/${items.path}/${item.path}`}
+                exact
+                component={item.component}
+              />))}
+          </Switch>
+        </Component>
+      )
+    }
+    route.children = children.filter(item => auths[item.name]).map(item => {
+      const childrenPath = `${items.path}/${item.path}`
+      const childRoute = {
+        key: childrenPath,
+        path: childrenPath,
+        fullPath: `/${childrenPath}`,
+        Container: item.container,
+        component: item.component || null,
+        name: item.name,
+        children: [],
+      }
+      // $FlowFixMe 这里会 认为item.path为空
+      const routeStack = item.path.replace(/^\/|\/$/g).split('/')
+      const length = routeStack.length
+      const lastPath = routeStack.pop()
+      routeMap.set(childRoute.fullPath, {
+        ...childRoute,
+        parentPath: childRoute.fullPath.replace(`/${lastPath}`, ''),
+        isDeepChild: length > 1,
+      })
+      return childRoute
+    })
+    return routers
+  }, ([]))
+  return { routeMap, routesData }
+}
