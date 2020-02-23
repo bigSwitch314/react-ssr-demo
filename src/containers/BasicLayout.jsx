@@ -42,6 +42,10 @@ class BasicLayout extends React.Component {
     }
   }
 
+  jumpToLogin = () => {
+    window.open('http://localhost:3002/#/login')
+  }
+
   render() {
     const { location: { pathname} } = this.props
     const parentKey = getParentKey(pathname)
@@ -94,7 +98,12 @@ class BasicLayout extends React.Component {
             <div className='right'>
               <div className='card'>
                 <div className="author">
-                  <img alt="罗强"style={{ marginBottom: 10, width: 128, borderRadius: 4}}src={avatar}/>
+                  <img
+                    onDoubleClick={() => this.jumpToLogin()}
+                    alt="罗强"
+                    style={{ marginBottom: 10, width: 128, borderRadius: 4}}
+                    src={avatar}
+                  />
                   <span className="block name">罗强</span>
                   <span className="block">Web Front-End</span>
                   <span className="block place">

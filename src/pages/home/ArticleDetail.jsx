@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import withStyle, { antdStyle } from '../../withStyle'
-import style from './ArticleDetail.less'
 import { getArticleDetail } from '@modules/article'
 import marked from '@components/markdown/helpers/marked'
 import handleCode from '@components/markdown/helpers/handelCode'
+import style from './ArticleDetail.less'
+import highlightSty from 'highlight.js/styles/tomorrow.css'
+import markdownSty from '@components/markdown/editor/index.less';
 
 
 const getQueryStringArgs = (search) => {
@@ -24,7 +26,7 @@ const getQueryStringArgs = (search) => {
 }
 
 
-@withStyle(style, ...antdStyle('list'))
+@withStyle(style, highlightSty, markdownSty, ...antdStyle('list'))
 @connect(
   state => ({
     articleDetail: state.article.articleDetail,

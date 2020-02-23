@@ -18,5 +18,5 @@ export default {
 
 const n = (name) => `article/${name}`
 
-export const getArticleList = (params) => request.get('/blog/article/get', n('getArticleList'), params)
-export const getArticleDetail = (params) => request.get('/blog/article/get', n('getArticleDetail'), params)
+export const getArticleList = (params) => request.get('/blog_fg/article/get', n('getArticleList'), params)
+export const getArticleDetail = (params) => request.get('/blog_fg/article/get', n('getArticleDetail'), params)

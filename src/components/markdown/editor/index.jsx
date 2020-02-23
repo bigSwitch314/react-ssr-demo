@@ -1,14 +1,17 @@
 /* eslint-disable */
 
 import React from 'react'
-import './index.less'
+// import './index.less'
+import style from './index.less'
 import classNames from 'classnames'
 import marked from '../helpers/marked'
 import textInsert from '../helpers/insertText'
 import keydownListen from '../helpers/keydownListen'
 import handleCode from '../helpers/handelCode'
-import 'highlight.js/styles/tomorrow.css'
+import withStyle from '@/withStyle'
+import highlightSty from 'highlight.js/styles/tomorrow.css'
 
+@withStyle(style, highlightSty)
 class MdEditor extends React.Component {
   constructor(props) {
     super(props)

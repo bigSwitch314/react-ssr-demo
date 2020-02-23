@@ -22,6 +22,6 @@ setTimeout(function() {
   io.sockets.emit('reload')
 }, 1000)
 
-server.listen(3000, () => {
-  console.log('Example app listening on port 3000!')
+server.listen(3003, () => {
+  console.log('Example app listening on port 3003!')
 })

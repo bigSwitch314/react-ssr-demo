@@ -1,5 +1,6 @@
 .home {
   padding: 20px;
+  border-radius: 4px;
 
   .no-article {
     margin-top: 80px;
@@ -10,7 +11,6 @@
   .ant-list-item {
     border-radius: 4px;
     margin-bottom: 20px;
-    padding: 16px;
     background-color: #fff;
   }
 
@@ -19,7 +19,16 @@
   }
 
   .ant-list-vertical .ant-list-item-meta-title {
-    font-weight: 550;
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  .ant-list-vertical .ant-list-item-meta-title > a {
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .ant-list-vertical .ant-list-item-meta-title > a:hover {
+    color: #1890ff;
   }
 
   .pagination {

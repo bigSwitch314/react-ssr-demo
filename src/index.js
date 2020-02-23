@@ -5,6 +5,7 @@ import store from './redux/storeClient'
 import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import Routers from './routers'
+import './styles/index.less'
 
 ReactDom.hydrate(
   <Provider store={store}>
