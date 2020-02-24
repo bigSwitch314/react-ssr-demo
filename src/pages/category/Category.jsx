@@ -44,7 +44,7 @@ class Category extends React.Component {
   render() {
     const { categoryList } = this.state
     return (
-      <div className="category">
+      <div className="category card">
         <div className="title">分类</div>
         {categoryList.length === 0
           ? (<div className="no-category">还未添加分类哦～</div>)

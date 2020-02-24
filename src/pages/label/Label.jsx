@@ -47,7 +47,7 @@ class Label extends React.Component {
   render() {
     const { labelList } = this.state
     return (
-      <div className="label">
+      <div className="label card">
         <div className="title">标签</div>
         {labelList.length === 0
           ? (<div className="no-label">还未添加标签哦～</div>)

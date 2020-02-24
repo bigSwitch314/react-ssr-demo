@@ -64,15 +64,21 @@
       margin: 0 auto;
 
       .left {
-        width: 800px;
         float: left;
+        width: 800px;
+        min-height: 200px;
+        color: #4a4a4a;
 
         .card {
-          min-height: 200px;
-          color: #4a4a4a;
+          margin-bottom: 20px;
+          padding: 20px;
           background-color: #fff;
           border-radius: 4px;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:last-child {
+          margin-bottom: 0;
         }
       }
 
@@ -80,7 +86,7 @@
         width: 320px;
         float: right;
 
-        .card {
+        .right-card {
           text-align: center;
           padding: 20px;
           color: #4a4a4a;
@@ -146,7 +152,7 @@
           }
         }
 
-        .card:not(:first-child) {
+        .right-card:not(:first-child) {
           margin-top: 20px;
         }
       }
