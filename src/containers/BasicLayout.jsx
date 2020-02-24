@@ -9,7 +9,6 @@ import avatar from '@assets/image/avatar.jpg'
 import sf from '@assets/image/sf.jpg'
 import { placeIcon, githubIcon, juejinIcon } from '@assets/svg/path'
 
-
 const menuCodes = {
   首页: '001',
   分类: '002',
@@ -46,6 +45,10 @@ class BasicLayout extends React.Component {
     window.open('http://localhost:3002/#/login')
   }
 
+  jumpToHome = () => {
+    window.location.href = 'http://localhost:3003/home'
+  }
+
   render() {
     const { location: { pathname} } = this.props
     const parentKey = getParentKey(pathname)
@@ -54,7 +57,7 @@ class BasicLayout extends React.Component {
       <Layout className="basic-layout">
         <div className="shadow">
           <Header className="basic-layout-header">
-            <i className="iconfont icon-logo logo" />
+            <i className="iconfont icon-logo logo" onClick={this.jumpToHome} />
             <Menu
               selectedKeys={[parentKey]}
               mode="horizontal"
@@ -99,7 +102,7 @@ class BasicLayout extends React.Component {
               <div className='card'>
                 <div className="author">
                   <img
-                    onDoubleClick={() => this.jumpToLogin()}
+                    onDoubleClick={this.jumpToLogin}
                     alt="罗强"
                     style={{ marginBottom: 10, width: 128, borderRadius: 4}}
                     src={avatar}
