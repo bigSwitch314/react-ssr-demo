@@ -73,30 +73,28 @@ class BasicLayout extends React.Component {
         <Content className="basic-layout-content">
           <div className='content'>
             <div className='left'>
-              <div className='card'>
-                <Switch>
-                  {routesData.map(routes => routes.children.length > 0 ?
-                    routes.children.map(route => (
-                      <Route
-                        extra
-                        key={route.key}
-                        path={route.fullPath}
-                        component={route.component}
-                      />
-                    )) :
+              <Switch>
+                {routesData.map(routes => routes.children.length > 0 ?
+                  routes.children.map(route => (
                     <Route
                       extra
-                      key={routes.key}
-                      path={routes.fullPath}
-                      component={routes.component}
-                    />,
-                  )}
-                  <Redirect to={routesData[0].fullPath} />
-                </Switch>
-              </div>
+                      key={route.key}
+                      path={route.fullPath}
+                      component={route.component}
+                    />
+                  )) :
+                  <Route
+                    extra
+                    key={routes.key}
+                    path={routes.fullPath}
+                    component={routes.component}
+                  />,
+                )}
+                <Redirect to={routesData[0].fullPath} />
+              </Switch>
             </div>
             <div className='right'>
-              <div className='card'>
+              <div className='right_card'>
                 <div className="author">
                   <img
                     onDoubleClick={() => this.jumpToLogin()}
@@ -152,8 +150,8 @@ class BasicLayout extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='card'>22222</div>
-              <div className='card'>33333</div>
+              <div className='right_card'>22222</div>
+              <div className='right_card'>33333</div>
             </div>
           </div>
         </Content>
