@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
-import style from './Home.less'
+import style from './ArticleQuery.less'
 import { getArticleList } from '@modules/article'
 
 
@@ -15,15 +15,14 @@ import { getArticleList } from '@modules/article'
   },
 )
 
-class Home extends React.Component {
+class ArticleQuery extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      queryParam: {},
+      articleQueryParam: {},
       currentPage: 1,
       pageSize: 5,
     }
-    this.doOnce = true
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -35,14 +34,27 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.getArticleList()
+    // 查询参数
+    let articleQueryParam = localStorage.getItem('articleQueryParam')
+    articleQueryParam = articleQueryParam && JSON.parse(articleQueryParam) || {}
+    this.setState({ articleQueryParam })
+    // 查询文章
+    this.getArticleList(articleQueryParam)
   }
 
-  getArticleList() {
+  getArticleList(param) {
     const { currentPage, pageSize } = this.state
+    let newParam = {}
+    if (param && param.type === 'category') {
+      newParam = { category_id: param.id }
+    }
+    if (param && param.type === 'category') {
+      newParam = { category_id: param.id }
+    }
     this.props.getArticleList({
       page_no: currentPage,
       page_size: pageSize,
+      ...newParam,
     })
   }
 
@@ -59,6 +71,33 @@ class Home extends React.Component {
     window.location.href = `/articleQuery?type=1&id=${item.category_id}`
   }
 
+  jumpTo() {
+    const { articleQueryParam } = this.state
+    const { type } = articleQueryParam
+    // 跳转到分类或标签页面
+    const typeArray = ['category', 'label']
+    if (typeArray.indexOf(type) !== -1) {
+      window.location.href = `/${type}`
+    }
+  }
+
+  /** 查询父级 */
+  queryParent() {
+    const { articleQueryParam } = this.state
+    const { type, parentName, parentId } = articleQueryParam
+    console.log('articleQueryParam------', articleQueryParam)
+    const newArticleQueryParam = {
+      type,
+      name: parentName,
+      parentName: '',
+      id: parentId,
+      parentId: '',
+    }
+    localStorage.setItem('articleQueryParam', JSON.stringify(newArticleQueryParam))
+    // 跳转到文章查询页面
+    window.location.href = `/articleQuery?type=1&id=${parentId}`
+  }
+
   onShowSizeChange = (currentPage, pageSize) => {
     this.setState({ currentPage: 1, pageSize }, () => {
       this.getArticleList()
@@ -67,19 +106,39 @@ class Home extends React.Component {
 
   changePage = (currentPage, pageSize) => {
     this.setState({ currentPage, pageSize }, () => {
-      // this.getArticleList()
-      window.location.href = `/home?page_no=${currentPage}`
+      this.getArticleList()
     })
   }
 
   render() {
-    const { currentPage, pageSize } = this.state
-    const { articleList: { list, count=0 } } = this.props
+    const { articleList: { list } } = this.props
+    const { articleQueryParam } = this.state
+    const { type, name, parentName } = articleQueryParam || {}
+    const typeName = type === 'category' ? '分类' : '标签'
 
     return (
       <div className="home">
+        <div className="category card">
+          <span
+            className="link"
+            onClick={() => this.jumpTo()}
+          >
+            {`${typeName} / `}
+          </span>
+          {
+            parentName
+              ? <span
+                className="link"
+                onClick={() => this.queryParent()}
+              >
+                {`${parentName}  /  `}
+              </span>
+              : null
+          }
+          <span> {name} </span>
+        </div>
         {list && list.length === 0
-          ? (<div className="no-article">还未发布文章哦～</div>)
+          ? (<div className="no-article">未查询到文章哦～</div>)
           : (<div className="article">
             <List
               className="card"
@@ -108,25 +167,28 @@ class Home extends React.Component {
           </div>)
         }
         <div className="pagination">
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={count}
-            onChange={this.changePage}
-            onShowSizeChange={this.onShowSizeChange}
-          />
+          <Pagination defaultCurrent={1} total={500} />
         </div>
       </div>
     )
   }
 }
 
-Home.loadData = (store, param) => {
-  console.log('home--------------------', param)
+ArticleQuery.loadData = (store, param) => {
+  const { type, id } = param
+  let newParam = {}
+  if (type ==='1') {
+    newParam = { category_id: id }
+  }
+  if (type ==='2') {
+    newParam = { label_id: id }
+  }
+
   return store.dispatch(getArticleList({
-    page_no: 2,
-    page_size: 8,
+    page_no: 1,
+    page_size: 5,
+    ...newParam,
   }))
 }
 
-export default Home
+export default ArticleQuery

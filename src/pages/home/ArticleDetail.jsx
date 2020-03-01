@@ -64,14 +64,32 @@ class ArticleDetail extends React.Component {
     this.props.getArticleDetail(param)
   }
 
+  /** 查询父级 */
+  query() {
+    const { category_id, parent_category_id, category_name, parent_category_name } = this.props.articleDetail
+    const articleQueryParam = {
+      type: 'category',
+      name: category_name,
+      parentName: parent_category_name,
+      id: category_id,
+      parentId: parent_category_id,
+    }
+    localStorage.setItem('articleQueryParam', JSON.stringify(articleQueryParam))
+    // 跳转到文章查询页面
+    window.location.href = '/articleQuery'
+  }
+
   render() {
-    const { content_md, title } = this.props.articleDetail
+    const { content_md, title, parent_category_name, category_name } = this.props.articleDetail
 
     return (
-      <div className="container">
+      <div className="article-detial">
         <div className="title">{title}</div>
         <div className="metadata">
-          <span className="block">FRONTEND/JAVASCRIPT</span>
+          <span className="block">前3天</span>
+          <span className="block link" onClick={() => this.query()}>
+            {parent_category_name ? `${parent_category_name}/${category_name}` : category_name}
+          </span>
           <span className="block">阅读约4分钟</span>
         </div>
         <div
@@ -84,8 +102,8 @@ class ArticleDetail extends React.Component {
 }
 
 ArticleDetail.loadData = (store, param={}) => {
-  console.log('getArticleDetail----11111111-------', param)
-  // return store.dispatch(getArticleDetail(param))
+  console.log('getArticleDetail----11111111-------', param.id)
+  return store.dispatch(getArticleDetail(param))
 }
 
 export default ArticleDetail

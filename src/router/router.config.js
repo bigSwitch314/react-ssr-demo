@@ -10,6 +10,7 @@ import Transshipment from '../pages/transshipment/Transshipment'
 import OpenSource from '../pages/openSource/OpenSource'
 import About from '../pages/about/About'
 import ArticleDetail from '../pages/home/ArticleDetail'
+import ArticleQuery from '../pages/home/ArticleQuery'
 import Suggestion from '../pages/suggestion/Suggestion'
 import Tool from '../pages/tool/Tool'
 
@@ -26,6 +27,13 @@ export default [
     component: ArticleDetail,
     loadData: ArticleDetail.loadData, // 服务端获取异步数据的函
     key: 'articleDetail',
+    hidden: true, // 不在菜单上显示
+  }, {
+    name: '文章查询',
+    path: 'articleQuery',
+    component: ArticleQuery,
+    loadData: ArticleQuery.loadData,
+    key: 'articleQuery',
     hidden: true, // 不在菜单上显示
   }, {
     name: '分类',

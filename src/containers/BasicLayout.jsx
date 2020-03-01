@@ -21,6 +21,7 @@ const menuCodes = {
   建议: '00901',
   工具: '00902',
   文章详情: '00101',
+  文章查询: '00102',
 }
 
 const { routesData } = getRoutes(menuCodes)
@@ -46,7 +47,7 @@ class BasicLayout extends React.Component {
   }
 
   jumpToHome = () => {
-    window.location.href = 'http://localhost:3003/home'
+    window.location.href = '/home'
   }
 
   render() {
@@ -97,7 +98,7 @@ class BasicLayout extends React.Component {
               </Switch>
             </div>
             <div className='right'>
-              <div className='right_card'>
+              <div className='right-card'>
                 <div className="author">
                   <img
                     onDoubleClick={this.jumpToLogin}
@@ -153,8 +154,8 @@ class BasicLayout extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='right_card'>22222</div>
-              <div className='right_card'>33333</div>
+              <div className='right-card'>22222</div>
+              <div className='right-card'>33333</div>
             </div>
           </div>
         </Content>
