@@ -4,6 +4,7 @@ import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './ArticleQuery.less'
 import { getArticleList } from '@modules/article'
+import { getQueryStringArgs } from '@utils/urlParse'
 
 
 @withStyle(style, ...antdStyle('list', 'pagination'))
@@ -39,7 +40,11 @@ class ArticleQuery extends React.Component {
     articleQueryParam = articleQueryParam && JSON.parse(articleQueryParam) || {}
     this.setState({ articleQueryParam })
     // 查询文章
-    this.getArticleList(articleQueryParam)
+    const search = window.location.search
+    const { page_no=1 } = getQueryStringArgs(search) || {}
+    this.setState({ currentPage: Number(page_no) }, () => {
+      this.getArticleList(articleQueryParam)
+    })
   }
 
   getArticleList(param) {
@@ -98,21 +103,20 @@ class ArticleQuery extends React.Component {
     window.location.href = `/articleQuery?type=1&id=${parentId}`
   }
 
-  onShowSizeChange = (currentPage, pageSize) => {
-    this.setState({ currentPage: 1, pageSize }, () => {
-      this.getArticleList()
-    })
-  }
-
-  changePage = (currentPage, pageSize) => {
-    this.setState({ currentPage, pageSize }, () => {
-      this.getArticleList()
-    })
+  changePage = (currentPage) => {
+    const { articleQueryParam } = this.state
+    const { type, id } = articleQueryParam
+    const newType = type === 'category' ? 1 : 2
+    if (currentPage ===1 ) {
+      window.location.href = `/articleQuery?type=${newType}&id=${id}`
+    } else {
+      window.location.href = `/articleQuery?type=${newType}&id=${id}&page_no=${currentPage}`
+    }
   }
 
   render() {
-    const { articleList: { list } } = this.props
-    const { articleQueryParam } = this.state
+    const { articleList: { list, count=0 } } = this.props
+    const { articleQueryParam, currentPage, pageSize } = this.state
     const { type, name, parentName } = articleQueryParam || {}
     const typeName = type === 'category' ? '分类' : '标签'
 
@@ -123,18 +127,20 @@ class ArticleQuery extends React.Component {
             className="link"
             onClick={() => this.jumpTo()}
           >
-            {`${typeName} / `}
+            {typeName}
           </span>
+          <span className="oblique-line"> {' / '}</span>
           {
             parentName
               ? <span
                 className="link"
                 onClick={() => this.queryParent()}
               >
-                {`${parentName}  /  `}
+                {parentName}
               </span>
               : null
           }
+          { parentName ? <span className="oblique-line">{' / '}</span> : null }
           <span> {name} </span>
         </div>
         {list && list.length === 0
@@ -167,7 +173,12 @@ class ArticleQuery extends React.Component {
           </div>)
         }
         <div className="pagination">
-          <Pagination defaultCurrent={1} total={500} />
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={count}
+            onChange={this.changePage}
+          />
         </div>
       </div>
     )

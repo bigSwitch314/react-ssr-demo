@@ -4,6 +4,7 @@ import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
 import { getArticleList } from '@modules/article'
+import { getQueryStringArgs } from '@utils/urlParse'
 
 
 @withStyle(style, ...antdStyle('list', 'pagination'))
@@ -35,7 +36,11 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.getArticleList()
+    const search = window.location.search
+    const { page_no=1 } = getQueryStringArgs(search) || {}
+    this.setState({ currentPage: Number(page_no) }, () => {
+      this.getArticleList()
+    })
   }
 
   getArticleList() {
@@ -59,17 +64,12 @@ class Home extends React.Component {
     window.location.href = `/articleQuery?type=1&id=${item.category_id}`
   }
 
-  onShowSizeChange = (currentPage, pageSize) => {
-    this.setState({ currentPage: 1, pageSize }, () => {
-      this.getArticleList()
-    })
-  }
-
-  changePage = (currentPage, pageSize) => {
-    this.setState({ currentPage, pageSize }, () => {
-      // this.getArticleList()
+  changePage = (currentPage) => {
+    if (currentPage ===1 ) {
+      window.location.href = '/home'
+    } else {
       window.location.href = `/home?page_no=${currentPage}`
-    })
+    }
   }
 
   render() {
@@ -113,7 +113,6 @@ class Home extends React.Component {
             pageSize={pageSize}
             total={count}
             onChange={this.changePage}
-            onShowSizeChange={this.onShowSizeChange}
           />
         </div>
       </div>
@@ -124,8 +123,8 @@ class Home extends React.Component {
 Home.loadData = (store, param) => {
   console.log('home--------------------', param)
   return store.dispatch(getArticleList({
-    page_no: 2,
-    page_size: 8,
+    page_no: param.page_no || 1,
+    page_size: 5,
   }))
 }
 
