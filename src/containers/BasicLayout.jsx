@@ -42,6 +42,10 @@ class BasicLayout extends React.Component {
     }
   }
 
+  onClickMenu = (item) => {
+    window.location.href = `/${item.key}`
+  }
+
   jumpToLogin = () => {
     window.open('http://localhost:3002/#/login')
   }
@@ -61,6 +65,7 @@ class BasicLayout extends React.Component {
             <i className="iconfont icon-logo logo" onClick={this.jumpToHome} />
             <Menu
               selectedKeys={[parentKey]}
+              onClick={this.onClickMenu}
               mode="horizontal"
               className="menu"
             >

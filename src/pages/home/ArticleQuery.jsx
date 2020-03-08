@@ -39,12 +39,10 @@ class ArticleQuery extends React.Component {
     let articleQueryParam = localStorage.getItem('articleQueryParam')
     articleQueryParam = articleQueryParam && JSON.parse(articleQueryParam) || {}
     this.setState({ articleQueryParam })
-    // 查询文章
+    // 分页
     const search = window.location.search
     const { page_no=1 } = getQueryStringArgs(search) || {}
-    this.setState({ currentPage: Number(page_no) }, () => {
-      this.getArticleList(articleQueryParam)
-    })
+    this.setState({ currentPage: Number(page_no) })
   }
 
   getArticleList(param) {
@@ -53,8 +51,8 @@ class ArticleQuery extends React.Component {
     if (param && param.type === 'category') {
       newParam = { category_id: param.id }
     }
-    if (param && param.type === 'category') {
-      newParam = { category_id: param.id }
+    if (param && param.type === 'label') {
+      newParam = { label_ids: param.id }
     }
     this.props.getArticleList({
       page_no: currentPage,
@@ -90,7 +88,6 @@ class ArticleQuery extends React.Component {
   queryParent() {
     const { articleQueryParam } = this.state
     const { type, parentName, parentId } = articleQueryParam
-    console.log('articleQueryParam------', articleQueryParam)
     const newArticleQueryParam = {
       type,
       name: parentName,
@@ -186,20 +183,18 @@ class ArticleQuery extends React.Component {
 }
 
 ArticleQuery.loadData = (store, param) => {
-  const { type, id } = param
-  let newParam = {}
-  if (type ==='1') {
-    newParam = { category_id: id }
-  }
+  const { type, id, page_no=1 } = param
+  let key = 'category_id'
   if (type ==='2') {
-    newParam = { label_id: id }
+    key = 'label_ids'
+  }
+  const newParam = {
+    [key]: id,
+    page_no,
+    page_size: 5,
   }
 
-  return store.dispatch(getArticleList({
-    page_no: 1,
-    page_size: 5,
-    ...newParam,
-  }))
+  return store.dispatch(getArticleList(newParam))
 }
 
 export default ArticleQuery

@@ -4,26 +4,11 @@ import withStyle, { antdStyle } from '../../withStyle'
 import { getArticleDetail } from '@modules/article'
 import marked from '@components/markdown/helpers/marked'
 import handleCode from '@components/markdown/helpers/handelCode'
+import { getQueryStringArgs } from '@utils/urlParse'
+import { arrowRightSmall, arrowLeftSmall } from '@assets/svg/path'
 import style from './ArticleDetail.less'
 import highlightSty from 'highlight.js/styles/tomorrow.css'
 import markdownSty from '@components/markdown/editor/index.less';
-
-
-const getQueryStringArgs = (search) => {
-  const pairs = search.slice(1).split('&')
-  const result = {}
-  pairs.forEach((pair) => {
-    if (pair && pair.indexOf('=') !== -1) {
-      pair = pair.split('=')
-      // 兼容写法
-      result[pair[0]] = result[
-        pair[0].toLocaleLowerCase()
-      ] = decodeURIComponent(pair[1] || '')
-    }
-  })
-
-  return JSON.parse(JSON.stringify(result))
-}
 
 
 @withStyle(style, highlightSty, markdownSty, ...antdStyle('list'))
@@ -65,37 +50,121 @@ class ArticleDetail extends React.Component {
   }
 
   /** 查询父级 */
-  query() {
-    const { category_id, parent_category_id, category_name, parent_category_name } = this.props.articleDetail
-    const articleQueryParam = {
-      type: 'category',
-      name: category_name,
-      parentName: parent_category_name,
-      id: category_id,
-      parentId: parent_category_id,
+  query(label=null) {
+    const { category_id, parent_category_id, category_name, parent_category_name, label_ids, label_names } = this.props.articleDetail
+    let articleQueryParam = {}
+    let type = 1
+    let id = category_id
+    if (label === null) {
+      articleQueryParam = {
+        type: 'category',
+        name: category_name,
+        parentName: parent_category_name,
+        id: category_id,
+        parentId: parent_category_id,
+      }
+    } else {
+      const index = label_names.split(',').indexOf(label)
+      articleQueryParam = {
+        type: 'label',
+        name: label,
+        parentName: '',
+        id: label_ids[index],
+        parentId: '',
+      }
+      id = label_ids[index]
+      type = 2
     }
     localStorage.setItem('articleQueryParam', JSON.stringify(articleQueryParam))
+
     // 跳转到文章查询页面
-    window.location.href = '/articleQuery'
+    window.location.href = `/articleQuery?type=${type}&id=${id}`
+  }
+
+  setSvgColor(type, index) {
+    const e = window.document.getElementsByClassName('path')
+    if (e.length === 1) index = 0
+    e[index].style.fill = type === 'over' ? '#1890ff' : '#4a4a4a'
+  }
+
+  jumptoDetail(id) {
+    window.location.href = `/articleDetail?id=${id}`
   }
 
   render() {
-    const { content_md, title, parent_category_name, category_name } = this.props.articleDetail
+    const { content_md, title, parent_category_name, category_name, label_names, pre, next } = this.props.articleDetail
 
     return (
       <div className="article-detial">
-        <div className="title">{title}</div>
-        <div className="metadata">
-          <span className="block">前3天</span>
-          <span className="block link" onClick={() => this.query()}>
-            {parent_category_name ? `${parent_category_name}/${category_name}` : category_name}
-          </span>
-          <span className="block">阅读约4分钟</span>
+        <div className="article">
+          <div className="title">{title}</div>
+          <div className="metadata">
+            <span className="block">前3天</span>
+            <span className="block link" onClick={() => this.query()}>
+              {parent_category_name ? `${parent_category_name}/${category_name}` : category_name}
+            </span>
+            <span className="block">阅读约4分钟</span>
+          </div>
+          <div
+            className="for-preview for-markdown-preview"
+            dangerouslySetInnerHTML={{ __html: handleCode(marked(content_md)) }}
+          />
+          <div className="label">
+            { label_names ? '# ' : null }
+            { label_names
+              ? (label_names.split(',').map((item, key)=> (
+                <span
+                  key={key}
+                  className="item"
+                  style={{ marginRight: 2 }}
+                  onClick={() =>this.query(item)}
+                >
+                  {item}
+                  {label_names.split(',').length !== (key +1) ? ',' : null}
+                </span>
+              )))
+              : null
+            }
+          </div>
         </div>
-        <div
-          className="for-preview for-markdown-preview"
-          dangerouslySetInnerHTML={{ __html: handleCode(marked(content_md)) }}
-        />
+        <div className="pre-next  ">
+          { pre
+            ? <div
+              style={{ float: 'left' }}
+              onMouseOver={() => this.setSvgColor('over', 0)}
+              onMouseOut={() => this.setSvgColor('out', 0)}
+            >
+              <svg viewBox="0 0 1024 1024" width="20" height="20">
+                <path d={arrowLeftSmall} className="path" />
+              </svg>
+              <span
+                className="left-title"
+                onClick={() => this.jumptoDetail(pre.id)}
+              >
+                {pre.title}
+              </span>
+            </div>
+            : null
+          }
+          { next
+            ? <div
+              style={{ float: 'right' }}
+              onMouseOver={() => this.setSvgColor('over', 1)}
+              onMouseOut={() => this.setSvgColor('out', 1)}
+            >
+              <span
+                className="right-title"
+                onClick={() => this.jumptoDetail(next.id)}
+              >
+                {next.title}
+              </span>
+              <svg viewBox="0 0 1024 1024" width="20" height="20">
+                <path d={arrowRightSmall} className="path"/>
+              </svg>
+            </div>
+            : null
+          }
+        </div>
       </div>
     )
   }

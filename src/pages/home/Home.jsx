@@ -38,9 +38,7 @@ class Home extends React.Component {
   componentDidMount() {
     const search = window.location.search
     const { page_no=1 } = getQueryStringArgs(search) || {}
-    this.setState({ currentPage: Number(page_no) }, () => {
-      this.getArticleList()
-    })
+    this.setState({ currentPage: Number(page_no)})
   }
 
   getArticleList() {
