@@ -13,6 +13,9 @@ export default {
     getArticleDetail(state, { payload }) {
       return ({ ...state, articleDetail: payload })
     },
+    articleDirectory(state, { payload }) {
+      return ({ ...state, articleDirectory: payload })
+    },
   },
 }
 

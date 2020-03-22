@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {Route, Switch, Redirect } from 'react-router-dom'
 import { Layout, Menu, Input, Button, Tooltip } from 'antd'
 import withStyle, { antdStyle } from '../withStyle'
@@ -33,6 +34,11 @@ const { Search } = Input
 
 // 菜单需引入menu icon样式
 @withStyle(style, ...antdStyle('layout', 'menu', 'input', 'icon', 'button', 'tooltip'))
+@connect(
+  state => ({
+    articleDirectory: state.article.articleDirectory,
+  })
+)
 
 class BasicLayout extends React.Component {
   constructor(props) {
@@ -55,7 +61,7 @@ class BasicLayout extends React.Component {
   }
 
   render() {
-    const { location: { pathname} } = this.props
+    const { location: { pathname}, articleDirectory=null } = this.props
     const parentKey = getParentKey(pathname)
 
     return (
@@ -159,7 +165,16 @@ class BasicLayout extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='right-card'>22222</div>
+              { articleDirectory
+                ? <div className='right-card directory'>
+                  <div className="title">目录</div>
+                  <div
+                    id="article-directory"
+                    dangerouslySetInnerHTML={{ __html: articleDirectory }}
+                  />
+                </div>
+                : null
+              }
               <div className='right-card'>33333</div>
             </div>
           </div>

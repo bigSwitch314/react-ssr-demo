@@ -26,7 +26,14 @@ function handleCode(str) {
               '</table>'+
             '</code>'
   })
-  return newStr.replace(/!@#/g, '\n')
+  const pattern = /<h([1-4]) id=[^<]*>(.*?)<\/h([1-4])>/g
+  const place = "<h$1 id=\"$2\">$2<\/h$3>"
+  str = str.replace(pattern, place)
+  newStr = newStr.replace(/!@#/g, '\n')
+  // 标题插入id，用于描点
+  const pattern2 = /<h([1-4]) id=[^<]*>(.*?)<\/h([1-4])>/g
+  const place2 = "<h$1 id=\"$2\">$2<\/h$3>"
+  return newStr.replace(pattern2, place2)
 }
 
 export default handleCode

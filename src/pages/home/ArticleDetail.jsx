@@ -4,20 +4,17 @@ import withStyle, { antdStyle } from '../../withStyle'
 import { getArticleDetail } from '@modules/article'
 import marked from '@components/markdown/helpers/marked'
 import handleCode from '@components/markdown/helpers/handelCode'
-import { getQueryStringArgs } from '@utils/urlParse'
+import tranformToDirectory from '@components/markdown/helpers/tranformToDirectory'
 import { arrowRightSmall, arrowLeftSmall } from '@assets/svg/path'
 import style from './ArticleDetail.less'
 import highlightSty from 'highlight.js/styles/tomorrow.css'
 import markdownSty from '@components/markdown/editor/index.less';
 
-
 @withStyle(style, highlightSty, markdownSty, ...antdStyle('list'))
 @connect(
   state => ({
     articleDetail: state.article.articleDetail,
-  }), {
-    getArticleDetail,
-  }
+  })
 )
 
 class ArticleDetail extends React.Component {
@@ -38,15 +35,39 @@ class ArticleDetail extends React.Component {
 
   componentDidMount() {
     const { articleDetail } = this.props
-    if (Object.keys(articleDetail).length === 0) {
-      this.getArticleDetail()
-    }
-  }
+    const html = handleCode(marked(articleDetail.content_md))
+    const { directory, ids } = tranformToDirectory(html)
+    this.props.dispatch({ type: 'article/articleDirectory', payload: directory })
 
-  getArticleDetail() {
-    const { location: { search=''}} = this.props.history
-    const param = getQueryStringArgs(search)
-    this.props.getArticleDetail(param)
+    // 滚动事件
+    const offsetTop = []
+    for (let i=0; i < ids.length; i++) {
+      const e = document.getElementById(ids[i])
+      offsetTop.push(e.offsetTop)
+    }
+    window.addEventListener('scroll', function () {
+      const scrollTop = document.body.scrollTop + 10
+      let id = null
+      for (let i=0; i < ids.length; i++) {
+        if (offsetTop[i] < scrollTop && scrollTop < offsetTop[i+1]) {
+          id = ids[i]
+          break
+        }
+        if (i === (ids.length - 1) && offsetTop[i] < scrollTop) {
+          id = ids[i]
+        }
+      }
+
+      const a = document.getElementById('article-directory').getElementsByTagName('a')
+      for (let i=0; i < a.length; i++) {
+        if (id ===a[i].text) {
+          a[i].style.color='red'
+        } else {
+          a[i].style.color='#6c757d'
+        }
+      }
+    })
+
   }
 
   /** 查询父级 */
