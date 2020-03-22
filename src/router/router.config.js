@@ -39,11 +39,13 @@ export default [
     name: '分类',
     path: 'category',
     component: Category,
+    loadData: Category.loadData, // 服务端获取异步数据的函数
     key: 'category',
   }, {
     name: '标签',
     path: 'label',
     component: Label,
+    loadData: Label.loadData, // 服务端获取异步数据的函数
     key: 'label',
   }, {
     name: '归档',

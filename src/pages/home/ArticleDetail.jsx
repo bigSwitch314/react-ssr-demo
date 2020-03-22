@@ -171,7 +171,6 @@ class ArticleDetail extends React.Component {
 }
 
 ArticleDetail.loadData = (store, param={}) => {
-  console.log('getArticleDetail----11111111-------', param.id)
   return store.dispatch(getArticleDetail(param))
 }
 
