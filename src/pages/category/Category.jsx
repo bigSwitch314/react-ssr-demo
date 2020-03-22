@@ -1,29 +1,24 @@
 import React from 'react'
 // import { List, Avatar, Icon } from 'antd'
+import { connect } from 'react-redux'
+import { getCategoryStat } from '@modules/category'
 import withStyle from '../../withStyle'
+import style from './Category.less'
 
-const testData = [
-  {name: 'algorithm', num: 4, children: [] },
-  {name: 'android', num: 12, children: [] },
-  {name: 'backend', num: 152, children: [
-    { name: 'cpp', num: 1, children: [] },
-    { name: 'docker', num: 3, children: [] },
-    { name: 'go', num: 18, children: [] },
-    { name: 'java', num: 7, children: [] },
-    { name: 'linux', num: 8, children: [] },
-  ]},
-]
-import style0 from './Category.less'
-import style1 from 'antd/lib/list/style/index.css'
-import style2 from 'antd/lib/avatar/style/index.css'
-import style3 from 'antd/lib/icon/style/index.css'
 
-@withStyle(style0, style1, style2, style3)
+@withStyle(style)
+@connect(
+  state => ({
+    categoryStat: state.category.categoryStat,
+  }), {
+    getCategoryStat,
+  }
+)
+
 class Category extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      categoryList: [],
     }
   }
 
@@ -36,25 +31,22 @@ class Category extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      categoryList: testData,
-    })
   }
 
   render() {
-    const { categoryList } = this.state
+    const { categoryStat } = this.props
     return (
       <div className="category card">
         <div className="title">分类</div>
-        {categoryList.length === 0
+        {categoryStat.length === 0
           ? (<div className="no-category">还未添加分类哦～</div>)
           : (<ul className="have-category">
-            {categoryList.map((item)=>{
+            {categoryStat.map((item)=>{
               return(
                 <li key={item.name}>
                   <a className="category-item">
                     <span className="category-name">{item.name}</span>
-                    <span className="category-num">{item.num}</span>
+                    <span className="category-num">{item.article_number}</span>
                   </a>
                   {item.children.length===0
                     ? (null)
@@ -64,7 +56,7 @@ class Category extends React.Component {
                           <li key={bitem.name}>
                             <a className="category-item">
                               <span className="category-name">{bitem.name}</span>
-                              <span className="category-num">{bitem.num}</span>
+                              <span className="category-num">{bitem.article_number}</span>
                             </a>
                           </li>
                         )
@@ -77,6 +69,10 @@ class Category extends React.Component {
       </div>
     )
   }
+}
+
+Category.loadData = (store, param={}) => {
+  return store.dispatch(getCategoryStat(param))
 }
 
 export default Category
