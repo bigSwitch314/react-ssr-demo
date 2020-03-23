@@ -175,7 +175,7 @@ class BasicLayout extends React.Component {
                 </div>
                 : null
               }
-              <div className='right-card'>33333</div>
+              {/* <div className='right-card'>33333</div> */}
             </div>
           </div>
         </Content>

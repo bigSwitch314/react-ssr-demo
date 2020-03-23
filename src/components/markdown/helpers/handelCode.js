@@ -32,8 +32,9 @@ function handleCode(str) {
   newStr = newStr.replace(/!@#/g, '\n')
   // 标题插入id，用于描点
   const pattern2 = /<h([1-4]) id=[^<]*>(.*?)<\/h([1-4])>/g
-  const place2 = "<h$1 id=\"$2\">$2<\/h$3>"
-  return newStr.replace(pattern2, place2)
+  return newStr.replace(pattern2, function($1, $2, $3, p1, p2) {
+    return `<h${$2} id=\"${p2}\">${$3}<\/h${$2}>`
+  })
 }
 
 export default handleCode

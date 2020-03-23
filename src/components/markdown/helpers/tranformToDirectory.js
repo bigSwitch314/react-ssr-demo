@@ -1,10 +1,10 @@
 export default function transformToDirectory(str) {
-  const pattern = /<h([1-4]) id=[^<]*>(.*?)<\/h([1-4])>/g
+  const pattern = /<h([1-4]) id="([^<]*)">(.*?)<\/h([1-4])>/g
   let result
   const arr = []
   const ids = []
   while ((result = pattern.exec(str)) !== null) {
-    arr.push({level: result[1], name: result[2]})
+    arr.push({level: result[1], name: result[3], id: result[2]})
     ids.push(result[2])
   }
 
@@ -44,7 +44,7 @@ function arrToTree(arr) {
 function treeToDirectory(data) {
   let menu_body = '<ul>'
   for (let i = 0; i < data.length; i++) {
-    menu_body += '<li ><a href="#' + data[i].name + '">' + data[i].name + '</a>';
+    menu_body += '<li ><a href="#' + data[i].id + '">' + data[i].name + '</a>';
     if(data[i].child && data[i].child.length > 0) {
       menu_body += treeToDirectory(data[i].child)
     }

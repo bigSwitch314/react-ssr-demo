@@ -36,7 +36,7 @@ class ArticleDetail extends React.Component {
   componentDidMount() {
     const { articleDetail } = this.props
     const html = handleCode(marked(articleDetail.content_md))
-    const { directory, ids } = tranformToDirectory(html)
+    const { directory, ids=[] } = tranformToDirectory(html)
     this.props.dispatch({ type: 'article/articleDirectory', payload: directory })
 
     // 滚动事件
@@ -60,10 +60,12 @@ class ArticleDetail extends React.Component {
 
       const a = document.getElementById('article-directory').getElementsByTagName('a')
       for (let i=0; i < a.length; i++) {
-        if (id ===a[i].text) {
-          a[i].style.color='red'
+        if (`#${id}` ===a[i].attributes[0].value) {
+          a[i].style.color='#1890ff'
+          a[i].style.fontWeight=600
         } else {
           a[i].style.color='#6c757d'
+          a[i].style.fontWeight=400
         }
       }
     })
