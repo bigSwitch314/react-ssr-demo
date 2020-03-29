@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import withStyle, { antdStyle } from '../../withStyle'
-import { getArticleDetail } from '@modules/article'
+import { getArticleDetail, getAclStat } from '@modules/article'
 import marked from '@components/markdown/helpers/marked'
 import handleCode from '@components/markdown/helpers/handelCode'
 import tranformToDirectory from '@components/markdown/helpers/tranformToDirectory'
@@ -63,13 +63,32 @@ class ArticleDetail extends React.Component {
         if (`#${id}` ===a[i].attributes[0].value) {
           a[i].style.color='#1890ff'
           a[i].style.fontWeight=600
+          // 目录滚动条联动
+          document.getElementById('article-directory').scrollTop = (a[i].offsetTop -61) - 20
         } else {
           a[i].style.color='#6c757d'
           a[i].style.fontWeight=400
         }
       }
-    })
 
+      // 鼠标滚动到一定高度，目录固定
+      const directory = document.getElementById('directory')
+      if (scrollTop > 800) {
+        directory.style.position = 'fixed'
+        directory.style.top = 292
+        directory.style.width = 320
+      } else {
+        directory.style.position = 'relative'
+        directory.style.top = 0
+      }
+      const ad_1 = document.getElementById('ad_1')
+      if (scrollTop > 800) {
+        ad_1.style.position = 'fixed'
+        ad_1.style.top = 0
+      } else {
+        ad_1.style.position = 'relative'
+      }
+    })
   }
 
   /** 查询父级 */
@@ -194,7 +213,8 @@ class ArticleDetail extends React.Component {
 }
 
 ArticleDetail.loadData = (store, param={}) => {
-  return store.dispatch(getArticleDetail(param))
+  store.dispatch(getArticleDetail(param))
+  store.dispatch(getAclStat())
 }
 
 export default ArticleDetail

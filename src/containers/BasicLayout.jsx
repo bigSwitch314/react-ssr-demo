@@ -8,6 +8,7 @@ import { getMenus, getRoutes, getParentKey } from '../../src/router/utils'
 import style from './BasicLayout.less'
 import avatar from '@assets/image/avatar.jpg'
 import sf from '@assets/image/sf.jpg'
+import ad_1 from '@assets/image/ad_1.jpg'
 import { placeIcon, githubIcon, juejinIcon } from '@assets/svg/path'
 
 const menuCodes = {
@@ -37,6 +38,7 @@ const { Search } = Input
 @connect(
   state => ({
     articleDirectory: state.article.articleDirectory,
+    aclStat: state.article.aclStat,
   })
 )
 
@@ -46,6 +48,10 @@ class BasicLayout extends React.Component {
     this.state = {
       current: 'mail',
     }
+  }
+
+  componentDidMount() {
+
   }
 
   onClickMenu = (item) => {
@@ -60,8 +66,14 @@ class BasicLayout extends React.Component {
     window.location.href = '/home'
   }
 
+  onClickAd1 = () => {
+    window.open('https://activity.huaweicloud.com/2020feb_promotion/index.html?utm_source=segmentfault&utm_medium=banner&utm_campaign=10033&utm_content=&utm_term=&utm_adplace=AdPlace024691')
+  }
+
   render() {
-    const { location: { pathname}, articleDirectory=null } = this.props
+    const { location: { pathname}, articleDirectory=null, aclStat } = this.props
+    console.log('aclStat----', aclStat)
+    const { article_stat=0, category_stat=0, label_stat=0 } = aclStat || {}
     const parentKey = getParentKey(pathname)
 
     return (
@@ -129,15 +141,15 @@ class BasicLayout extends React.Component {
                 <div className="statistic">
                   <div className="stat">
                     <span className="block">文章</span>
-                    <span className="block number">10</span>
+                    <span className="block number">{article_stat}</span>
                   </div>
                   <div className="stat">
                     <span className="block">分类</span>
-                    <span className="block number">12</span>
+                    <span className="block number">{category_stat}</span>
                   </div>
                   <div className="stat">
                     <span className="block">标签</span>
-                    <span className="block number">37</span>
+                    <span className="block number">{label_stat}</span>
                   </div>
                 </div>
                 <div className="attention">
@@ -165,17 +177,20 @@ class BasicLayout extends React.Component {
                   </div>
                 </div>
               </div>
+              <div className='right-card ad_1' id="ad_1" onClick={this.onClickAd1}>
+                <img src={ad_1} width={320} style={{ borderRadius: 4 }} />
+              </div>
               { articleDirectory
-                ? <div className='right-card directory'>
+                ? <div className='right-card directory' id="directory">
                   <div className="title">目录</div>
                   <div
                     id="article-directory"
+                    className="article-directory"
                     dangerouslySetInnerHTML={{ __html: articleDirectory }}
                   />
                 </div>
                 : null
               }
-              {/* <div className='right-card'>33333</div> */}
             </div>
           </div>
         </Content>

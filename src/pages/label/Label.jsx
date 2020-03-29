@@ -1,12 +1,13 @@
 import React from 'react'
-// import { List, Avatar, Icon } from 'antd'
+import { Tooltip } from 'antd'
 import { connect } from 'react-redux'
 import { getLabelStat } from '@modules/label'
-import withStyle from '../../withStyle'
+import withStyle, { antdStyle } from '../../withStyle'
+
 import style from './Label.less'
 
 
-@withStyle(style)
+@withStyle(style, ...antdStyle('tooltip'))
 @connect(
   state => ({
     labelStat: state.label.labelStat,
@@ -20,6 +21,7 @@ class Label extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      tipsVisible: [],
     }
   }
 
@@ -32,21 +34,47 @@ class Label extends React.Component {
   }
 
   componentDidMount() {
+    // tips隐显控制
+    const tipsVisible = []
+    const haveLabel = document.getElementById('have-label')
+    if (haveLabel) {
+      const divArr = haveLabel.getElementsByClassName('label-name')
+      for (let i=0; i<divArr.length; i++) {
+        tipsVisible[i] = false
+        if (divArr[i].scrollWidth > divArr[i].clientWidth) {
+          // 显示省略号，内部字符长度超过宽度
+          tipsVisible[i] = true
+        }
+      }
+    }
+    this.setState({ tipsVisible })
+  }
+
+  componentDidUpdate() {
+    console.log('2')
   }
 
   render() {
     const { labelStat } = this.props
+    const { tipsVisible } = this.state
+
     return (
       <div className="label card">
         <div className="title">标签</div>
         {labelStat.length === 0
           ? (<div className="no-label">还未添加标签哦～</div>)
-          : (<div className="have-label">
-            {labelStat.map((item)=>{
+          : (<div className="have-label" id="have-label">
+            {labelStat.map((item, index)=>{
               return (
                 <div key={item.name} className="label-item">
                   <a>
-                    <span className="label-name">{item.name}</span>
+                    <Tooltip
+                      placement="bottom"
+                      title={tipsVisible[index] ? item.name: null}
+                      overlayClassName="link-tip"
+                    >
+                      <span className="label-name">{item.name}</span>
+                    </Tooltip>
                     <span className="label-num">{item.article_number}</span>
                   </a>
                 </div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './ArticleQuery.less'
-import { getArticleList } from '@modules/article'
+import { getArticleList, getAclStat } from '@modules/article'
 import { getQueryStringArgs } from '@utils/urlParse'
 
 
@@ -194,7 +194,9 @@ ArticleQuery.loadData = (store, param) => {
     page_size: 5,
   }
 
-  return store.dispatch(getArticleList(newParam))
+  store.dispatch(getArticleList(newParam))
+  store.dispatch(getAclStat())
+
 }
 
 export default ArticleQuery

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { List, Pagination } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
-import { getArticleList } from '@modules/article'
+import { getArticleList, getAclStat } from '@modules/article'
 import { getQueryStringArgs } from '@utils/urlParse'
 
 
@@ -119,11 +119,11 @@ class Home extends React.Component {
 }
 
 Home.loadData = (store, param) => {
-  console.log('home--------------------', param)
-  return store.dispatch(getArticleList({
+  store.dispatch(getArticleList({
     page_no: param.page_no || 1,
     page_size: 5,
   }))
+  store.dispatch(getAclStat())
 }
 
 export default Home
