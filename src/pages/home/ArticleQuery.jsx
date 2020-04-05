@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { List, Pagination } from 'antd'
+import { List, Pagination, Empty } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './ArticleQuery.less'
 import { getArticleList, getAclStat } from '@modules/article'
 import { getQueryStringArgs } from '@utils/urlParse'
 
 
-@withStyle(style, ...antdStyle('list', 'pagination'))
+@withStyle(style, ...antdStyle('list', 'pagination', 'empty'))
 @connect(
   state => ({
     articleList: state.article.articleList,
@@ -118,7 +118,7 @@ class ArticleQuery extends React.Component {
     const typeName = type === 'category' ? '分类' : '标签'
 
     return (
-      <div className="home">
+      <div className="category">
         <div className="category card">
           <span
             className="link"
@@ -141,7 +141,7 @@ class ArticleQuery extends React.Component {
           <span> {name} </span>
         </div>
         {list && list.length === 0
-          ? (<div className="no-article">未查询到文章哦～</div>)
+          ? (<div className="no-article card"> <Empty/> </div>)
           : (<div className="article">
             <List
               className="card"
@@ -167,16 +167,16 @@ class ArticleQuery extends React.Component {
                 </List.Item>
               )}
             />
+            <div className="pagination">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={count}
+                onChange={this.changePage}
+              />
+            </div>
           </div>)
         }
-        <div className="pagination">
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={count}
-            onChange={this.changePage}
-          />
-        </div>
       </div>
     )
   }
@@ -193,10 +193,10 @@ ArticleQuery.loadData = (store, param) => {
     page_no,
     page_size: 5,
   }
-
-  store.dispatch(getArticleList(newParam))
-  store.dispatch(getAclStat())
-
+  return [
+    store.dispatch(getAclStat()),
+    store.dispatch(getArticleList(newParam)),
+  ]
 }
 
 export default ArticleQuery

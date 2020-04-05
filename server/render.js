@@ -15,13 +15,19 @@ const render = (req, res) => {
   const { pathname: path, query } = url.parse(req.url)
   const param = querystring.parse(query)
   const pathname = path.substr(1)
-  const promises = []
+  let promises = []
   const matchedRoutes = matchRoutes(router, pathname)
   matchedRoutes.forEach(item => {
-    if (item.route.loadData) {
-      promises.push(item.route.loadData(store, param))
+    const func = item.route.loadData
+    console.log('func: ', func)
+    console.log('func(store, param): ', func(store, param))
+
+    if (func && Array.isArray(func(store, param))) {
+      promises = [...promises, ...func(store, param)]
     }
   })
+
+  console.log('promises: ', promises)
 
   const context = { css: [] }
   Promise.all(promises).then(() => {
@@ -42,6 +48,8 @@ const render = (req, res) => {
     const rootPath = process.cwd()
     const cssStr = context.css.length ? context.css.join('\n') : ''
     fs.writeFile(`${rootPath}/public/index.css`, cssStr, () => {})
+
+    console.log('store.getState(): ', store.getState())
 
     // 响应请求内容
     const result = `

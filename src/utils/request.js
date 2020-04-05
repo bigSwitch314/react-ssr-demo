@@ -47,6 +47,7 @@ function getParams(data) {
 
 function generaterParams(url, options) {
   const { params, method } = options
+  console.log(`url: ${url} ---- param:` + JSON.stringify(params))
   options.credentials = 'same-origin'
   delete options.params
   if (method !== 'GET') {
@@ -116,6 +117,7 @@ function request(url, options, shouldValidate = true) {
     .then(result => {
       if (!shouldValidate) return result
       const { errcode: code, errmsg: desc, data } = result
+      console.log(`url: ${url} ---- result:`, data)
       handleCode(code, desc)
       return data
     })

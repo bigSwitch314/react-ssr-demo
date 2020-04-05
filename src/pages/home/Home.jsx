@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { List, Pagination } from 'antd'
+import { List, Pagination, Empty } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
 import { getArticleList, getAclStat } from '@modules/article'
 import { getQueryStringArgs } from '@utils/urlParse'
 
 
-@withStyle(style, ...antdStyle('list', 'pagination'))
+@withStyle(style, ...antdStyle('list', 'pagination', 'empty'))
 @connect(
   state => ({
     articleList: state.article.articleList,
@@ -77,7 +77,7 @@ class Home extends React.Component {
     return (
       <div className="home">
         {list && list.length === 0
-          ? (<div className="no-article">还未发布文章哦～</div>)
+          ? (<div className="no-article card"> <Empty /> </div>)
           : (<div className="article">
             <List
               className="card"
@@ -103,27 +103,31 @@ class Home extends React.Component {
                 </List.Item>
               )}
             />
+            <div className="pagination">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={count}
+                onChange={this.changePage}
+              />
+            </div>
           </div>)
         }
-        <div className="pagination">
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={count}
-            onChange={this.changePage}
-          />
-        </div>
       </div>
     )
   }
 }
 
 Home.loadData = (store, param) => {
-  store.dispatch(getArticleList({
-    page_no: param.page_no || 1,
+  const newParam = {
+    age_no: param.page_no || 1,
     page_size: 5,
-  }))
-  store.dispatch(getAclStat())
+  }
+
+  return [
+    store.dispatch(getArticleList(newParam)),
+    store.dispatch(getAclStat({})),
+  ]
 }
 
 export default Home

@@ -213,8 +213,10 @@ class ArticleDetail extends React.Component {
 }
 
 ArticleDetail.loadData = (store, param={}) => {
-  store.dispatch(getArticleDetail(param))
-  store.dispatch(getAclStat())
+  return [
+    store.dispatch(getArticleDetail(param)),
+    store.dispatch(getAclStat()),
+  ]
 }
 
 export default ArticleDetail

@@ -72,7 +72,6 @@ class BasicLayout extends React.Component {
 
   render() {
     const { location: { pathname}, articleDirectory=null, aclStat } = this.props
-    console.log('aclStat----', aclStat)
     const { article_stat=0, category_stat=0, label_stat=0 } = aclStat || {}
     const parentKey = getParentKey(pathname)
 
