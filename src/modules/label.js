@@ -1,11 +1,15 @@
 import request from '../utils/request'
 
+const initState = {
+  labelStat: [],
+}
 export default {
   namespace: 'label',
-  initState: {
-    labelStat: [],
-  },
+  initState: { ...initState },
   reducer: {
+    reset() {
+      return ({ ...initState })
+    },
     getLabelStat(state, { payload }) {
       return ({ ...state, labelStat: payload })
     },

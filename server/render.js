@@ -10,8 +10,12 @@ import BasicLayout from '../src/containers/BasicLayout'
 const url = require('url')
 const querystring = require('querystring')
 
-
 const render = (req, res) => {
+  store.dispatch({type: 'article/reset'})
+  store.dispatch({type: 'category/reset'})
+  store.dispatch({type: 'label/reset'})
+  store.dispatch({type: 'loading/reset'})
+
   const { pathname: path, query } = url.parse(req.url)
   const param = querystring.parse(query)
   const pathname = path.substr(1)
@@ -19,15 +23,10 @@ const render = (req, res) => {
   const matchedRoutes = matchRoutes(router, pathname)
   matchedRoutes.forEach(item => {
     const func = item.route.loadData
-    console.log('func: ', func)
-    console.log('func(store, param): ', func(store, param))
-
     if (func && Array.isArray(func(store, param))) {
       promises = [...promises, ...func(store, param)]
     }
   })
-
-  console.log('promises: ', promises)
 
   const context = { css: [] }
   Promise.all(promises).then(() => {
@@ -49,15 +48,13 @@ const render = (req, res) => {
     const cssStr = context.css.length ? context.css.join('\n') : ''
     fs.writeFile(`${rootPath}/public/index.css`, cssStr, () => {})
 
-    console.log('store.getState(): ', store.getState())
-
     // 响应请求内容
     const result = `
       <html>
       <head>
         <title>hello</title>
-        <link href="/index.css" type="text/css" rel="stylesheet"></style>
         <link rel="stylesheet" type="text/css" href="/iconfont/iconfont.css">
+        <link href="/index.css" type="text/css" rel="stylesheet"></style>
       </head>
       <body>
         <div id="root">${content}</div>

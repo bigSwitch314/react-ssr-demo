@@ -1,13 +1,18 @@
 import request from '../utils/request'
 
+const initState = {
+  articleList: {},
+  articleDetail: {},
+  aclStat: {},
+}
+
 export default {
   namespace: 'article',
-  initState: {
-    articleList: {},
-    articleDetail: {},
-    getAclStat: {},
-  },
+  initState: { ... initState },
   reducer: {
+    reset() {
+      return ({ ... initState })
+    },
     getArticleList(state, { payload }) {
       return ({ ...state, articleList: payload })
     },

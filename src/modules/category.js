@@ -1,11 +1,16 @@
 import request from '../utils/request'
 
+const initState = {
+  categoryStat: [],
+}
+
 export default {
   namespace: 'category',
-  initState: {
-    categoryStat: [],
-  },
+  initState: { ...initState },
   reducer: {
+    reset() {
+      return ({ ...initState })
+    },
     getCategoryStat(state, { payload }) {
       return ({ ...state, categoryStat: payload })
     },

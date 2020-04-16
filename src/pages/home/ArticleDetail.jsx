@@ -135,7 +135,7 @@ class ArticleDetail extends React.Component {
 
   render() {
     const { content_md, title, parent_category_name, category_name, label_names, pre, next } = this.props.articleDetail
-
+    console.log('articleDetail----', this.props.articleDetail)
     return (
       <div className="article-detial">
         <div className="article">

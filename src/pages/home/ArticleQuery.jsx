@@ -116,7 +116,7 @@ class ArticleQuery extends React.Component {
     const { articleQueryParam, currentPage, pageSize } = this.state
     const { type, name, parentName } = articleQueryParam || {}
     const typeName = type === 'category' ? '分类' : '标签'
-
+    console.log('this.props.articleList------------------------', this.props.articleList)
     return (
       <div className="category">
         <div className="category card">

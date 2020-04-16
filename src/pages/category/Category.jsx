@@ -1,15 +1,17 @@
 import React from 'react'
-import { Empty } from 'antd'
+import { Empty, Skeleton } from 'antd'
 import { connect } from 'react-redux'
 import { getCategoryStat } from '@modules/category'
+import { getAclStat } from '@modules/article'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Category.less'
 
 
-@withStyle(style, ...antdStyle('empty'))
+@withStyle(style, ...antdStyle('empty', 'skeleton'))
 @connect(
   state => ({
     categoryStat: state.category.categoryStat,
+    loading: state.loading['category/getCategoryStat'],
   }), {
     getCategoryStat,
   }
@@ -31,6 +33,7 @@ class Category extends React.Component {
   }
 
   componentDidMount() {
+    console.log('1------loading: ', this.props.loading)
   }
 
   /** 查询父级 */
@@ -52,12 +55,14 @@ class Category extends React.Component {
   }
 
   render() {
-    const { categoryStat } = this.props
+    const { categoryStat, loading } = this.props
 
     return (
       <div className="category card">
         {categoryStat.length === 0
-          ? (<div className="no-category"> <Empty /> </div>)
+          ? (<div className="no-category">
+            { loading === undefined ? <Skeleton active /> : <Empty /> }
+          </div>)
           : (<>
             <div className="title">分类</div>
             <ul className="have-category">
@@ -96,6 +101,7 @@ class Category extends React.Component {
 Category.loadData = (store, param={}) => {
   return [
     store.dispatch(getCategoryStat(param)),
+    store.dispatch(getAclStat({})),
   ]
 }
 

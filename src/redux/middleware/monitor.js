@@ -1,5 +1,6 @@
 const SHOW = '@@loading-show'
 const HIDE = '@@loading-hidden'
+const REST = 'loading/reset'
 
 function createLoading(type, loading) {
   return ({
@@ -50,6 +51,9 @@ export function extraReducer(state = {}, { type, payload }) {
         ...state,
         [namespace]: false,
       }
+      break
+    case REST:
+      ret = {}
       break
     default:
       ret = state

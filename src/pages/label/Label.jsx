@@ -1,16 +1,17 @@
 import React from 'react'
-import { Tooltip, Empty } from 'antd'
+import { Tooltip, Empty, Skeleton } from 'antd'
 import { connect } from 'react-redux'
 import { getLabelStat } from '@modules/label'
+import { getAclStat } from '@modules/article'
 import withStyle, { antdStyle } from '../../withStyle'
-
 import style from './Label.less'
 
 
-@withStyle(style, ...antdStyle('tooltip', 'empty'))
+@withStyle(style, ...antdStyle('tooltip', 'empty', 'skeleton', 'spin'))
 @connect(
   state => ({
     labelStat: state.label.labelStat,
+    loading: state.loading['label/getLabelStat'],
   }), {
     getLabelStat,
   }
@@ -73,13 +74,15 @@ class Label extends React.Component {
   }
 
   render() {
-    const { labelStat } = this.props
+    const { labelStat, loading } = this.props
     const { tipsVisible } = this.state
 
     return (
       <div className="label card">
-        {labelStat.length === 0
-          ? (<div className="no-label"> <Empty /> </div>)
+        {labelStat && labelStat.length === 0
+          ? (<div className="no-label">
+            { loading === undefined ? <Skeleton active /> : <Empty /> }
+          </div>)
           : (<>
             <div className="title">标签</div>
             <div className="have-label" id="have-label">
@@ -110,6 +113,7 @@ class Label extends React.Component {
 Label.loadData = (store, param={}) => {
   return [
     store.dispatch(getLabelStat(param)),
+    store.dispatch(getAclStat({})),
   ]
 }
 

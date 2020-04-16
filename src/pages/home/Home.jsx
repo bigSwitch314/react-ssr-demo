@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { List, Pagination, Empty } from 'antd'
+import { List, Pagination, Empty, Skeleton } from 'antd'
 import withStyle, { antdStyle } from '../../withStyle'
 import style from './Home.less'
 import { getArticleList, getAclStat } from '@modules/article'
 import { getQueryStringArgs } from '@utils/urlParse'
 
 
-@withStyle(style, ...antdStyle('list', 'pagination', 'empty'))
+@withStyle(style, ...antdStyle('list', 'pagination', 'empty', 'skeleton'))
 @connect(
   state => ({
     articleList: state.article.articleList,
+    loading: state.loading['article/getArticleList'],
   }), {
     getArticleList,
   },
@@ -72,12 +73,14 @@ class Home extends React.Component {
 
   render() {
     const { currentPage, pageSize } = this.state
-    const { articleList: { list, count=0 } } = this.props
+    const { articleList: { list=[], count=0 }, loading } = this.props
 
     return (
       <div className="home">
         {list && list.length === 0
-          ? (<div className="no-article card"> <Empty /> </div>)
+          ? (<div className="no-article card">
+            { loading === undefined ? <Skeleton active /> : <Empty /> }
+          </div>)
           : (<div className="article">
             <List
               className="card"
@@ -103,14 +106,13 @@ class Home extends React.Component {
                 </List.Item>
               )}
             />
-            <div className="pagination">
-              <Pagination
-                current={currentPage}
-                pageSize={pageSize}
-                total={count}
-                onChange={this.changePage}
-              />
-            </div>
+            <Pagination
+              className="pagination"
+              current={currentPage}
+              pageSize={pageSize}
+              total={count}
+              onChange={this.changePage}
+            />
           </div>)
         }
       </div>
@@ -120,7 +122,7 @@ class Home extends React.Component {
 
 Home.loadData = (store, param) => {
   const newParam = {
-    age_no: param.page_no || 1,
+    page_no: param.page_no || 1,
     page_size: 5,
   }
 
