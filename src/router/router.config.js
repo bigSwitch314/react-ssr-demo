@@ -51,6 +51,7 @@ export default [
     name: '归档',
     path: 'archive',
     component: Archive,
+    loadData: Archive.loadData, // 服务端获取异步数据的函数
     key: 'archive',
   }, {
     name: '转载',

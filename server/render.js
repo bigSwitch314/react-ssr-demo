@@ -14,6 +14,7 @@ const render = (req, res) => {
   store.dispatch({type: 'article/reset'})
   store.dispatch({type: 'category/reset'})
   store.dispatch({type: 'label/reset'})
+  store.dispatch({type: 'archive/reset'})
   store.dispatch({type: 'loading/reset'})
 
   const { pathname: path, query } = url.parse(req.url)

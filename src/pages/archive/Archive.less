@@ -32,11 +32,23 @@
 
         .article-title {
           font-size: 14px;
-          color: #242424;
+
+          a {
+            color: #242424;
+          }
+
+          a:hover {
+            color: #1890ff;
+          }
         }
 
         .article-meta {
-          font-size: 14px;
+          font-size: 12px;
+          cursor: pointer;
+        }
+
+        .article-meta:hover {
+          color: #1890ff;
         }
       }
 
@@ -48,7 +60,7 @@
         content: '';
         display: block;
         position: absolute;
-        top: 20px;
+        top: 19px;
         left: -25px;
         width: 9px;
         height: 9px;
@@ -60,12 +72,22 @@
         content: '';
         display: block;
         position: absolute;
-        top: 29px;
+        top: 28px;
         left: -25px;
         bottom: 0;
         width: 9px;
         background: #fff;
       }
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .anticon svg {
+      position: relative;
+      top: 8px;
     }
   }
 }
