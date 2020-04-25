@@ -47,6 +47,19 @@ class Archive extends React.Component {
     }
   }
 
+  query(type, item) {
+    const articleQueryParam = {
+      type,
+      name: item.category_name,
+      parentName: item.parent_category_name || '',
+      id: item.category_id,
+      parentId: item.parent_category_id || '',
+    }
+    localStorage.setItem('articleQueryParam', JSON.stringify(articleQueryParam))
+    // 跳转到查询页面
+    window.location.href = `/articleQuery?type=1&id=${item.category_id}`
+  }
+
   render() {
     const { currentPage, pageSize } = this.state
     const { archive: { list=[], count=0 }, loading } = this.props
@@ -67,7 +80,9 @@ class Archive extends React.Component {
                         <div className="article" key={bitem.id}>
                           <div className="article-time">{bitem.year+'-'+bitem.date}</div>
                           <div className="article-title"><a href={`/articleDetail?id=${bitem.id}`}>{bitem.title}</a></div>
-                          <div className="article-meta">{bitem.category}</div>
+                          <div className="article-meta" onClick={() => this.query('category', bitem)}>
+                            {bitem.parent_category_name ? `${bitem.parent_category_name}/${bitem.category_name}` : bitem.category_name}
+                          </div>
                         </div>
                       )
                     })}
