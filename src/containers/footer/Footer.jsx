@@ -25,30 +25,13 @@ class Footer extends React.Component {
     return (
       <div className="footer">
         <div>
-          <span>© 2018 — 2019</span>
-          <span style={{ margin: 3 }}>
-            <i className="iconfont icon-user logo"/>
-          </span>
-          <span>luoqiang</span>
+          <span>Copyright © 2018 — 2019 luoqiang</span>
+          <span>当前呈现版本 19.02.27</span>
         </div>
         <div>
-          <span>由PHP+Mysql强力驱动</span>
-          <span style={{ margin: 3 }}>|</span>
-          <span>主题 — NexT.Mist v5.1.3</span>
-        </div>
-        <div>
-          <span>渝ICP备14062481号-1</span>
-        </div>
-        <div>
-          <span style={{ marginRight: 6 }}>
-            <i className="iconfont icon-user logo" />
-          </span>
-          <span>1234</span>
-          <span style={{ margin: 14 }}>|</span>
-          <span style={{ marginRight: 6 }}>
-            <i className="iconfont icon-eye logo" />
-          </span>
-          <span>2234</span>
+          <span>渝ICP备 14062481号-1</span>
+          <span>本站内容采用 CC 4.0  许可协议</span>
+          <span>由博客之家强力驱动</span>
         </div>
       </div>
     )
