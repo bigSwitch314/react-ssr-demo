@@ -71,6 +71,20 @@ class Home extends React.Component {
     }
   }
 
+  getActions= (item) => {
+    const actions = [
+      <span key={1}> {item.create_time} </span>,
+      <span key={2} onClick={() => this.query('category', item)}>
+        {item.parent_category_name ? `${item.parent_category_name}/${item.category_name}` : item.category_name}
+      </span>,
+      <span key={3}> 阅读约 21 分钟 </span>,
+    ]
+    if (!item.category_name) {
+      actions.splice(1, 1)
+    }
+    return actions
+  }
+
   render() {
     const { currentPage, pageSize } = this.state
     const { articleList: { list=[], count=0 }, loading } = this.props
@@ -90,13 +104,7 @@ class Home extends React.Component {
               renderItem={item => (
                 <List.Item
                   key={item.title}
-                  actions={[
-                    <span key={1}> 6天前 </span>,
-                    <span key={2} onClick={() => this.query('category', item)}>
-                      {item.parent_category_name ? `${item.parent_category_name}/${item.category_name}` : item.category_name}
-                    </span>,
-                    <span key={3}> 阅读约 21 分钟 </span>,
-                  ]}
+                  actions={this.getActions(item)}
                 >
                   <List.Item.Meta
                     title={<a href={`/articleDetail?id=${item.id}`}>{item.title}</a>}

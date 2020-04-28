@@ -134,14 +134,22 @@ class ArticleDetail extends React.Component {
   }
 
   render() {
-    const { content_md, title, parent_category_name, category_name, label_names, pre, next } = this.props.articleDetail
-    console.log('articleDetail----', this.props.articleDetail)
+    const {
+      content_md,
+      title,
+      parent_category_name,
+      category_name,
+      label_names,
+      create_time,
+      pre,
+      next,
+    } = this.props.articleDetail
     return (
       <div className="article-detial">
         <div className="article">
           <div className="title">{title}</div>
           <div className="metadata">
-            <span className="block">前3天</span>
+            <span className="block">{create_time}</span>
             <span className="block link" onClick={() => this.query()}>
               {parent_category_name ? `${parent_category_name}/${category_name}` : category_name}
             </span>
