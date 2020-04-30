@@ -141,6 +141,7 @@ class ArticleDetail extends React.Component {
       category_name,
       label_names,
       create_time,
+      word_number,
       pre,
       next,
     } = this.props.articleDetail
@@ -153,7 +154,7 @@ class ArticleDetail extends React.Component {
             <span className="block link" onClick={() => this.query()}>
               {parent_category_name ? `${parent_category_name}/${category_name}` : category_name}
             </span>
-            <span className="block">阅读约4分钟</span>
+            <span className="block">阅读约 { Math.ceil(word_number/400)} 分钟</span>
           </div>
           <div
             className="for-preview for-markdown-preview"

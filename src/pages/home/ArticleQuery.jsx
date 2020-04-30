@@ -116,7 +116,6 @@ class ArticleQuery extends React.Component {
     const { articleQueryParam, currentPage, pageSize } = this.state
     const { type, name, parentName } = articleQueryParam || {}
     const typeName = type === 'category' ? '分类' : '标签'
-    console.log('this.props.articleList------------------------', this.props.articleList)
     return (
       <div className="category">
         <div className="category card">
@@ -152,11 +151,11 @@ class ArticleQuery extends React.Component {
                 <List.Item
                   key={item.title}
                   actions={[
-                    <span key={1}> 6天前 </span>,
+                    <span key={1}> {item.create_time} </span>,
                     <span key={2} onClick={() => this.query('category', item)}>
                       {item.parent_category_name ? `${item.parent_category_name}/${item.category_name}` : item.category_name}
                     </span>,
-                    <span key={3}> 阅读约 21 分钟 </span>,
+                    <span key={3}> 阅读约 { Math.ceil(item.word_number/400)} 分钟</span>,
                   ]}
                 >
                   <List.Item.Meta

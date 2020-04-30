@@ -13,3 +13,11 @@ export function getStrLength(str){
   }
   return realLength
 }
+
+export function countTextReadTime(text) {
+  // 计算文章内容字符数
+  const content_num = text.replace(/\s/g, '').length
+  // 阅读速度平均为（300～500）字／分钟, 一般取400
+  const content_min=Math.ceil(content_num/400)
+  return content_min
+}

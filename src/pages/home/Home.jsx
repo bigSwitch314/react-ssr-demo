@@ -77,7 +77,7 @@ class Home extends React.Component {
       <span key={2} onClick={() => this.query('category', item)}>
         {item.parent_category_name ? `${item.parent_category_name}/${item.category_name}` : item.category_name}
       </span>,
-      <span key={3}> 阅读约 21 分钟 </span>,
+      <span key={3}> 阅读约 { Math.ceil(item.word_number/400)} 分钟</span>,
     ]
     if (!item.category_name) {
       actions.splice(1, 1)
