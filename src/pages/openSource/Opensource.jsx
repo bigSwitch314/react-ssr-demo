@@ -1,14 +1,12 @@
 import React from 'react'
-// import { List, Avatar, Icon } from 'antd'
-import withStyle from '../../withStyle'
+import { Empty } from 'antd'
+import { getAclStat } from '@modules/article'
+import withStyle, { antdStyle } from '../../withStyle'
 
 const testData = []
-import style0 from './OpenSource.less'
-import style1 from 'antd/lib/list/style/index.css'
-import style2 from 'antd/lib/avatar/style/index.css'
-import style3 from 'antd/lib/icon/style/index.css'
+import style from './OpenSource.less'
 
-@withStyle(style0, style1, style2, style3)
+@withStyle(style, ...antdStyle('empty'))
 class OpenSource extends React.Component {
   constructor(props) {
     super(props)
@@ -36,11 +34,17 @@ class OpenSource extends React.Component {
     return (
       <div className="home">
         {articleList.length === 0
-          ? (<div className="no-article">还未添加开源项目哦～</div>)
+          ? (<div className="no-article card"><Empty /></div>)
           : (articleList)}
       </div>
     )
   }
+}
+
+OpenSource.loadData = (store) => {
+  return [
+    store.dispatch(getAclStat({})),
+  ]
 }
 
 export default OpenSource

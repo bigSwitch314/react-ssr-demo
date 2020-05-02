@@ -1,15 +1,13 @@
 import React from 'react'
-// import { List, Avatar, Icon } from 'antd'
-import withStyle from '../../withStyle'
+import { Empty } from 'antd'
+import { getAclStat } from '@modules/article'
+import withStyle, { antdStyle } from '../../withStyle'
 
 const testData = []
-import style0 from './About.less'
-import style1 from 'antd/lib/list/style/index.css'
-import style2 from 'antd/lib/avatar/style/index.css'
-import style3 from 'antd/lib/icon/style/index.css'
+import style from './About.less'
 
-@withStyle(style0, style1, style2, style3)
-class Label extends React.Component {
+@withStyle(style, ...antdStyle('empty'))
+class About extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -36,11 +34,17 @@ class Label extends React.Component {
     return (
       <div className="home">
         {articleList.length === 0
-          ? (<div className="no-article">还未添加作者简介哦～</div>)
+          ? (<div className="no-article card"><Empty /></div>)
           : (articleList)}
       </div>
     )
   }
 }
 
-export default Label
+About.loadData = (store) => {
+  return [
+    store.dispatch(getAclStat({})),
+  ]
+}
+
+export default About

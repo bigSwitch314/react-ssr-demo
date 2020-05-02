@@ -63,23 +63,34 @@ export function getRouteStack(url, routes) {
 
 /**
  * 获取菜单
- * @param {*} path 禁止访问菜单
+ * @param {*} auths 授权访问的路由
  * @param {*} routes 路由配置
  */
-export function getMenus(path, routes=routerConfig) {
-  let shoudMatch = true
-  path.replace(/^\/+|\/+/g, '')
-  let matchedPath = path
-  if (path.indexOf('!') === 0) {
-    shoudMatch = false
-    matchedPath = path.substr(1)
+export function getMenus(auths, routes=routerConfig) {
+  // 生成新的路由配置
+  let newRoutes = []
+  const more = []
+  Object.keys(auths).forEach((name, key) => {
+    routes.forEach(item => {
+      if (key <= 6 && (name === item.name)) {
+        newRoutes.push(item)
+      } else if (key > 6 && name === item.name) {
+        more.push(item)
+      }
+    })
+  })
+  const hiddenRoutes = routes.filter(item => item.hidden)
+  newRoutes = newRoutes.concat(hiddenRoutes)
+  if (more.length) {
+    newRoutes.push({
+      name: '更多',
+      path: 'more',
+      children: more,
+      key: 'more',
+    })
   }
-  if (shoudMatch) {
-    routes = routes.filter(items => items.path === matchedPath)
-  } else {
-    routes = routes.filter(items => items.path !== matchedPath)
-  }
-  const res = routes.map(route => {
+
+  const res = newRoutes.map(route => {
     if (!route.name || route.hidden) return null // 这里需要抛出警告
     if (!route.component) {
       return (
@@ -106,16 +117,18 @@ export function getMenus(path, routes=routerConfig) {
     )
   })
 
-  return res
+  return {menusData: res, newRouterConfig: newRoutes }
 }
 
 /**
  * 获取路由
  *
  * @param {*} routerCon 路由配置
- * @param {*} auths 无权访问的路由
+ * @param {*} auths 授权访问的路由
  */
 export function getRoutes(auths={}, routerCon=routerConfig) {
+  auths['更多'] = '999999'
+
   const routeMap= new Map()
   const routesData = routerCon.reduce((routers, items) => {
     const { component: Component, children = [], name } = items
@@ -128,7 +141,7 @@ export function getRoutes(auths={}, routerCon=routerConfig) {
       name: items.name,
       children: [],
     }
-    if (!auths[name]) return routers
+    if (!auths[name] && !items.hidden) return routers
     routers.push(route)
     routeMap.set(route.fullPath, {
       ...route,
@@ -150,7 +163,9 @@ export function getRoutes(auths={}, routerCon=routerConfig) {
         </Component>
       )
     }
-    route.children = children.filter(item => auths[item.name]).map(item => {
+    route.children = children.filter(item => (
+      auths[item.name] || item.hidden
+    )).map(item => {
       const childrenPath = `${items.path}/${item.path}`
       const childRoute = {
         key: childrenPath,

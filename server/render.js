@@ -6,17 +6,13 @@ import router from '../src/router'
 import { Provider } from 'react-redux'
 import store from '../src/redux/storeServer'
 import BasicLayout from '../src/containers/BasicLayout'
+import resetState from './resetState'
 
 const url = require('url')
 const querystring = require('querystring')
-
 const render = (req, res) => {
-  store.dispatch({type: 'article/reset'})
-  store.dispatch({type: 'category/reset'})
-  store.dispatch({type: 'label/reset'})
-  store.dispatch({type: 'archive/reset'})
-  store.dispatch({type: 'loading/reset'})
-
+  // 重置store状态
+  resetState()
   const { pathname: path, query } = url.parse(req.url)
   const param = querystring.parse(query)
   const pathname = path.substr(1)
@@ -26,6 +22,16 @@ const render = (req, res) => {
     const func = item.route.loadData
     if (func && Array.isArray(func(store, param))) {
       promises = [...promises, ...func(store, param)]
+    }
+    // 二级路由
+    if (item.route.children) {
+      const matchedRoutesChildren = matchRoutes(item.route.children, pathname.split('/')[1])
+      matchedRoutesChildren.forEach(itemChildren => {
+        const funcChildren = itemChildren.route.loadData
+        if (funcChildren && Array.isArray(funcChildren(store, param))) {
+          promises = [...promises, ...funcChildren(store, param)]
+        }
+      })
     }
   })
 

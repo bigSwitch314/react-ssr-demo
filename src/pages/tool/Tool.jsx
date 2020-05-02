@@ -1,14 +1,12 @@
 import React from 'react'
-// import { List, Avatar, Icon } from 'antd'
-import withStyle from '../../withStyle'
+import { Empty } from 'antd'
+import { getAclStat } from '@modules/article'
+import withStyle, { antdStyle } from '../../withStyle'
 
 const testData = []
-import style0 from './Tool.less'
-import style1 from 'antd/lib/list/style/index.css'
-import style2 from 'antd/lib/avatar/style/index.css'
-import style3 from 'antd/lib/icon/style/index.css'
+import style from './Tool.less'
 
-@withStyle(style0, style1, style2, style3)
+@withStyle(style, ...antdStyle('empty'))
 class Tool extends React.Component {
   constructor(props) {
     super(props)
@@ -34,13 +32,19 @@ class Tool extends React.Component {
   render() {
     const { articleList } = this.state
     return (
-      <div className="home">
+      <div className="home card">
         {articleList.length === 0
-          ? (<div className="no-article">还未添加工具哦～</div>)
+          ? (<div className="no-article"><Empty/></div>)
           : (articleList)}
       </div>
     )
   }
+}
+
+Tool.loadData = (store) => {
+  return [
+    store.dispatch(getAclStat({})),
+  ]
 }
 
 export default Tool

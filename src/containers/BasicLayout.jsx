@@ -19,15 +19,12 @@ const menuCodes = {
   转载: '006',
   开源: '007',
   关于: '008',
-  更多: '009',
   建议: '00901',
   工具: '00902',
-  文章详情: '00101',
-  文章查询: '00102',
 }
 
-const { routesData } = getRoutes(menuCodes)
-const menuData = getMenus('!/user')
+const { menusData, newRouterConfig } = getMenus(menuCodes)
+const { routesData } = getRoutes(menuCodes, newRouterConfig)
 
 const { Header, Content, Footer } = Layout
 const { Search } = Input
@@ -86,7 +83,7 @@ class BasicLayout extends React.Component {
               mode="horizontal"
               className="menu"
             >
-              {menuData}
+              {menusData}
             </Menu>
             <Search
               placeholder=""
@@ -126,7 +123,7 @@ class BasicLayout extends React.Component {
                     onDoubleClick={this.jumpToLogin}
                     alt="罗强"
                     style={{ marginBottom: 10, width: 128, borderRadius: 4}}
-                    src={avatar}
+                    src={`../${avatar}`}
                   />
                   <span className="block name">罗强</span>
                   <span className="block">Web Front-End</span>
@@ -164,7 +161,7 @@ class BasicLayout extends React.Component {
                   </div>
                   <div className="link">
                     <Tooltip placement="bottom" title="segmentfault" overlayClassName="link-tip">
-                      <img src={sf} width={14} />
+                      <img src={`../${sf}`} width={14} />
                     </Tooltip>
                   </div>
                   <div className="link">
@@ -177,7 +174,7 @@ class BasicLayout extends React.Component {
                 </div>
               </div>
               <div className='right-card ad_1' id="ad_1" onClick={this.onClickAd1}>
-                <img src={ad_1} width={320} style={{ borderRadius: 4 }} />
+                <img src={`../${ad_1}`} width={320} style={{ borderRadius: 4 }} />
               </div>
               { articleDirectory
                 ? <div className='right-card directory' id="directory">

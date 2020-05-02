@@ -1,7 +1,3 @@
-
-
-// import loadComponent from '../loadComponent'
-
 import Home from '../pages/home/Home'
 import Category from '../pages/category/Category'
 import Label from '../pages/label/Label'
@@ -57,33 +53,36 @@ export default [
     name: '转载',
     path: 'transshipment',
     component: Transshipment,
+    loadData: Transshipment.loadData,
     key: 'transshipment',
   }, {
     name: '开源',
     path: 'openSource',
     component: OpenSource,
+    loadData: OpenSource.loadData,
     key: 'openSource',
   }, {
     name: '关于',
     path: 'about',
     component: About,
+    loadData: About.loadData,
     key: 'about',
+  }, {
+    name: '建议',
+    path: 'suggestion',
+    component: Suggestion,
+    loadData: Suggestion.loadData,
+    key: 'suggestion',
+  }, {
+    name: '工具',
+    path: 'tool',
+    component: Tool,
+    loadData: Tool.loadData,
+    key: 'tool',
   }, {
     name: '更多',
     path: 'more',
-    children: [
-      {
-        name: '建议',
-        path: 'suggestion',
-        component: Suggestion,
-        key: 'suggestion',
-      }, {
-        name: '工具',
-        path: 'tool',
-        component: Tool,
-        key: 'tool',
-      },
-    ],
+    children: [],
     key: 'more',
   },
 ]
