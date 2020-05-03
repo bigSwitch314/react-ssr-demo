@@ -2,9 +2,8 @@
 // import { removeLogin } from '../components/Authentication/util'
 // const fetch = require('node-fetch')
 
-// const baseUrl = 'http://bigswitch314.cn:80'
-const baseUrl = 'http://127.0.0.1:8000'
-
+const baseUrl = 'http://blog:80' // 线上环境
+// const baseUrl = 'http://bigswitch314.cn:80' // 本地环境
 
 function fetchApi(url, options, timeout = 30000) {
   return new Promise((resolve, reject) => {
