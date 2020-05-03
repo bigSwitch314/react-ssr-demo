@@ -2,8 +2,8 @@
 // import { removeLogin } from '../components/Authentication/util'
 // const fetch = require('node-fetch')
 
-// const baseUrl = 'http://bigswitch314.cn:8094'
-const baseUrl = 'http://bigswitch314.cn:80'
+// const baseUrl = 'http://bigswitch314.cn:80'
+const baseUrl = 'http://127.0.0.1:8000'
 
 
 function fetchApi(url, options, timeout = 30000) {
